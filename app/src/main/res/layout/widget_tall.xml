@@ -1,41 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- 1×2. The ring shrinks so the dollar always has a line of its own. No refresh button. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/widget_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/widget_bg"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
     android:padding="8dp">
 
-    <LinearLayout
+    <ImageView
+        android:id="@+id/ring"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:contentDescription="@string/weekly_kicker"
+        android:scaleType="fitCenter"
+        android:src="@drawable/widget_ring_preview" />
+
+    <TextView
+        android:id="@+id/credits_value"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:autoSizeMaxTextSize="16sp"
+        android:autoSizeMinTextSize="10sp"
+        android:autoSizeStepGranularity="1sp"
+        android:autoSizeTextType="uniform"
+        android:fontFamily="@font/inter_bold"
         android:gravity="center"
-        android:orientation="vertical">
-
-        <ImageView
-            android:id="@+id/ring"
-            android:layout_width="72dp"
-            android:layout_height="72dp"
-            android:contentDescription="@string/weekly_kicker"
-            android:scaleType="fitCenter"
-            android:src="@drawable/widget_ring_preview" />
-
-        <TextView
-            android:id="@+id/credits_value"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:autoSizeMaxTextSize="18sp"
-            android:autoSizeMinTextSize="11sp"
-            android:autoSizeTextType="uniform"
-            android:gravity="center"
-            android:maxLines="1"
-            android:textStyle="bold" />
-    </LinearLayout>
-
-    <include
-        layout="@layout/widget_refresh"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_gravity="top|end" />
-</FrameLayout>
+        android:includeFontPadding="false"
+        android:maxLines="1" />
+</LinearLayout>

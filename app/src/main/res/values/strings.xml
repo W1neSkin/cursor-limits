@@ -31,6 +31,7 @@
     <string name="left_word">Left</string>
     <string name="resets_word">Resets</string>
     <string name="extra_kicker">Extra credits</string>
+    <string name="widget_extra">Extra</string>
     <string name="alert_word">Alert</string>
     <string name="refresh_word">Refresh</string>
     <string name="hours_label">Hours</string>

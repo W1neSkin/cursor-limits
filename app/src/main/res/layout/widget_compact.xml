@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- 2×1. Ring and the dollar share the row. No refresh button. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/widget_root"
     android:layout_width="match_parent"
@@ -6,13 +7,16 @@
     android:background="@drawable/widget_bg"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:paddingHorizontal="8dp"
-    android:paddingVertical="6dp">
+    android:paddingStart="8dp"
+    android:paddingTop="6dp"
+    android:paddingEnd="8dp"
+    android:paddingBottom="6dp">
 
     <ImageView
         android:id="@+id/ring"
-        android:layout_width="56dp"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
+        android:layout_weight="1"
         android:contentDescription="@string/weekly_kicker"
         android:scaleType="fitCenter"
         android:src="@drawable/widget_ring_preview" />
@@ -22,15 +26,12 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:autoSizeMaxTextSize="22sp"
-        android:autoSizeMinTextSize="12sp"
+        android:autoSizeMaxTextSize="18sp"
+        android:autoSizeMinTextSize="10sp"
+        android:autoSizeStepGranularity="1sp"
         android:autoSizeTextType="uniform"
+        android:fontFamily="@font/inter_bold"
         android:gravity="center"
-        android:maxLines="1"
-        android:textStyle="bold" />
-
-    <include
-        layout="@layout/widget_refresh"
-        android:layout_width="32dp"
-        android:layout_height="32dp" />
+        android:includeFontPadding="false"
+        android:maxLines="1" />
 </LinearLayout>

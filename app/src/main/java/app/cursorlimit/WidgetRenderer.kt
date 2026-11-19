@@ -6,9 +6,12 @@ import android.appwidget.AppWidgetProvider
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.graphics.Typeface
+import android.os.Build
 import android.util.TypedValue
 import android.view.View
 import android.widget.RemoteViews
+import androidx.core.content.res.ResourcesCompat
 import app.cursorlimit.core.CardText
 import java.time.ZoneId
 
@@ -36,8 +39,9 @@ object WidgetRenderer {
     private const val LIGHT_MUTED = 0xFF5C667A.toInt()
     private const val LIGHT_GREEN = 0xFF0C8F5A.toInt()
     private const val LIGHT_GOLD = 0xFF8A5A10.toInt()
-    private const val DARK_TRACK = 0xFF2C3344.toInt()
-    private const val LIGHT_TRACK = 0xFFD5DBE6.toInt()
+    // Dark enough to sit on the card, light enough that the ring is still a ring.
+    private const val DARK_TRACK = 0xFF4A5368.toInt()
+    private const val LIGHT_TRACK = 0xFFC5CDD8.toInt()
 
     fun hasAny(context: Context): Boolean {
         val manager = AppWidgetManager.getInstance(context)
@@ -68,20 +72,16 @@ object WidgetRenderer {
                     "setBackgroundResource",
                     if (light) R.drawable.widget_bg_light else R.drawable.widget_bg_dark,
                 )
-                val scale = if (face.kind == Kind.CARD || face.kind == Kind.WIDE) {
-                    spanScale(widgetWidthDp(manager, id))
-                } else {
-                    1f
-                }
+                val width = widgetSize(manager, id, AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH, AppWidgetManager.OPTION_APPWIDGET_MAX_WIDTH)
+                val height = widgetSize(manager, id, AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT, AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT)
                 when (face.kind) {
-                    Kind.CARD -> bindCard(context, views, text, day, clock, left, error, loading, light, scale)
-                    Kind.WIDE -> bindWide(context, views, text, day, left, light, scale)
-                    Kind.FLEX -> bindFlex(context, views, layout, text, left, light)
+                    Kind.CARD -> bindCard(context, views, text, day, clock, left, error, loading, light, height)
+                    Kind.WIDE -> bindWide(context, views, text, day, left, light, height)
+                    Kind.FLEX -> bindFlex(context, views, layout, text, left, light, width, height)
                 }
                 views.setOnClickPendingIntent(R.id.widget_root, open)
-                if (layout != R.layout.widget_tiny) {
-                    // The arrow stays. A ProgressBar spins in its place while the request runs.
-                    // A normal animation on the arrow does not play inside a home-screen widget.
+                // Small sizes are only the ring and the dollar. The arrow is on the card and the wide row.
+                if (layout == R.layout.widget_limit || layout == R.layout.widget_wide) {
                     views.setOnClickPendingIntent(R.id.refresh_button, refresh)
                     showRefresh(views, layout, loading, light)
                 }
@@ -90,15 +90,8 @@ object WidgetRenderer {
         }
     }
 
-    /** 250dp is four columns. A wider row grows the type so the numbers fill it. */
-    private fun spanScale(widthDp: Int): Float {
-        if (widthDp <= 0) return 1.28f
-        return (widthDp / 250f).coerceIn(1f, 1.4f)
-    }
-
-    private fun widgetWidthDp(manager: AppWidgetManager, id: Int): Int {
-        val options = manager.getAppWidgetOptions(id)
-        return sizeDp(options, AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH, AppWidgetManager.OPTION_APPWIDGET_MAX_WIDTH)
+    private fun widgetSize(manager: AppWidgetManager, id: Int, minKey: String, maxKey: String): Int {
+        return sizeDp(manager.getAppWidgetOptions(id), minKey, maxKey)
     }
 
     /** Uses the widget's shape. Launchers report different widths for one cell. */
@@ -122,10 +115,6 @@ object WidgetRenderer {
         return if (min > 0) min else options.getInt(maxKey)
     }
 
-    private fun textDp(views: RemoteViews, id: Int, sp: Float) {
-        views.setTextViewTextSize(id, TypedValue.COMPLEX_UNIT_SP, sp)
-    }
-
     private fun bindCard(
         context: Context,
         views: RemoteViews,
@@ -136,14 +125,17 @@ object WidgetRenderer {
         error: String?,
         loading: Boolean,
         light: Boolean,
-        scale: Float,
+        height: Int,
     ) {
         val textColor = if (light) LIGHT_TEXT else DARK_TEXT
         val muted = if (light) LIGHT_MUTED else DARK_MUTED
         val gold = if (light) LIGHT_GOLD else DARK_GOLD
+        // The ring follows the cell height, so a short row does not push the dollar off the edge.
+        val ringDp = if (height > 0) (height - 24).coerceIn(72, 120) else 96
+        fitRing(views, ringDp)
         views.setImageViewBitmap(
             R.id.ring,
-            ring(context, 112, left, if (left == null) "—" else "$left%", light),
+            ring(context, ringDp, left, if (left == null) "—" else "$left%", "LEFT", light),
         )
         views.setTextViewText(R.id.reset_day, if (text != null) day else "—")
         views.setTextViewText(R.id.reset_time, if (text != null) clock else "")
@@ -167,14 +159,6 @@ object WidgetRenderer {
             val problem = !loading && !error.isNullOrBlank()
             views.setTextColor(R.id.status, if (problem) 0xFFC53636.toInt() else muted)
         }
-        val pad = (14f * scale).toInt().coerceAtLeast(14)
-        views.setViewPadding(R.id.widget_root, pad, pad, pad, pad)
-        textDp(views, R.id.reset_caption, 11f * scale)
-        textDp(views, R.id.reset_day, 22f * scale)
-        textDp(views, R.id.reset_time, 14f * scale)
-        textDp(views, R.id.credits_caption, 11f * scale)
-        textDp(views, R.id.credits_value, 22f * scale)
-        textDp(views, R.id.status, 11f * scale)
     }
 
     private fun bindWide(
@@ -184,10 +168,12 @@ object WidgetRenderer {
         day: String,
         left: Int?,
         light: Boolean,
-        scale: Float,
+        height: Int,
     ) {
         val muted = if (light) LIGHT_MUTED else DARK_MUTED
-        views.setImageViewBitmap(R.id.ring, ring(context, 36, left, "", light))
+        val ringDp = if (height > 0) (height - 12).coerceIn(26, 40) else 32
+        fitRing(views, ringDp)
+        views.setImageViewBitmap(R.id.ring, ring(context, ringDp, left, "", "", light))
         views.setTextViewText(R.id.remaining, if (left == null) "—" else "$left%")
         views.setTextViewText(R.id.reset_day, if (text != null) day else "—")
         views.setTextViewText(R.id.credits_value, text?.credits ?: "—")
@@ -195,13 +181,6 @@ object WidgetRenderer {
         views.setTextColor(R.id.left_label, if (light) LIGHT_GREEN else DARK_GREEN)
         views.setTextColor(R.id.reset_day, muted)
         views.setTextColor(R.id.credits_value, if (light) LIGHT_GOLD else DARK_GOLD)
-        val padX = (12f * scale).toInt().coerceAtLeast(12)
-        val padY = (6f * scale).toInt().coerceAtLeast(6)
-        views.setViewPadding(R.id.widget_root, padX, padY, padX, padY)
-        textDp(views, R.id.remaining, 20f * scale)
-        textDp(views, R.id.left_label, 11f * scale)
-        textDp(views, R.id.reset_day, 14f * scale)
-        textDp(views, R.id.credits_value, 18f * scale)
     }
 
     private fun bindFlex(
@@ -211,45 +190,70 @@ object WidgetRenderer {
         text: CardText?,
         left: Int?,
         light: Boolean,
+        width: Int,
+        height: Int,
     ) {
-        val dp = when (layout) {
-            R.layout.widget_square -> 96
-            R.layout.widget_tall -> 72
-            R.layout.widget_compact -> 56
-            else -> 64
-        }
-        val label = when {
-            left == null -> "—"
-            layout == R.layout.widget_tiny -> "$left"
-            else -> "$left"
-        }
-        views.setImageViewBitmap(R.id.ring, ring(context, dp, left, label, light))
+        val dp = flexRingDp(layout, width, height)
+        val label = if (left == null) "—" else "$left"
+        views.setImageViewBitmap(R.id.ring, ring(context, dp, left, label, "", light))
         if (layout == R.layout.widget_tiny) return
         views.setTextViewText(R.id.credits_value, text?.credits ?: "—")
         views.setTextColor(R.id.credits_value, if (light) LIGHT_GOLD else DARK_GOLD)
     }
 
-    /** Draws the arc for one widget. [label] is empty on the wide row, where the number sits beside it. */
-    private fun ring(context: Context, dp: Int, left: Int?, label: String, light: Boolean): android.graphics.Bitmap {
-        val px = (dp * context.resources.displayMetrics.density).toInt().coerceAtLeast(32)
+    /** Leaves a line for the dollar on the tall and square sizes. */
+    private fun flexRingDp(layout: Int, width: Int, height: Int): Int {
+        if (width <= 0 || height <= 0) {
+            return when (layout) {
+                R.layout.widget_square -> 96
+                R.layout.widget_compact -> 56
+                else -> 72
+            }
+        }
+        return when (layout) {
+            R.layout.widget_compact -> (height - 12).coerceIn(36, 88)
+            R.layout.widget_tiny -> minOf(width, height).coerceIn(40, 140) - 8
+            else -> (minOf(width, height) - 32).coerceIn(48, 140)
+        }
+    }
+
+    /** Squares the ring view to the cell, on launchers that accept a runtime size. */
+    private fun fitRing(views: RemoteViews, dp: Int) {
+        if (Build.VERSION.SDK_INT < 31) return
+        views.setViewLayoutWidth(R.id.ring, dp.toFloat(), TypedValue.COMPLEX_UNIT_DIP)
+        views.setViewLayoutHeight(R.id.ring, dp.toFloat(), TypedValue.COMPLEX_UNIT_DIP)
+    }
+
+    /** Draws the arc. [sublabel] is LEFT on the large card and empty everywhere else. */
+    private fun ring(
+        context: Context,
+        dp: Int,
+        left: Int?,
+        label: String,
+        sublabel: String,
+        light: Boolean,
+    ): android.graphics.Bitmap {
+        val px = (dp * context.resources.displayMetrics.density).toInt().coerceIn(48, 360)
         val fraction = (left ?: 0) / 100f
         return RingBitmap.create(
             size = px,
             leftFraction = fraction,
             label = label,
+            sublabel = sublabel,
             arcColor = if (light) LIGHT_GREEN else DARK_GREEN,
             trackColor = if (light) LIGHT_TRACK else DARK_TRACK,
             labelColor = if (light) LIGHT_TEXT else DARK_TEXT,
+            typeface = interBold(context),
         )
     }
 
+    private fun interBold(context: Context): Typeface {
+        return ResourcesCompat.getFont(context, R.font.inter_bold) ?: Typeface.DEFAULT_BOLD
+    }
+
     private fun showRefresh(views: RemoteViews, layout: Int, loading: Boolean, light: Boolean) {
-        val iconSp = when (layout) {
-            R.layout.widget_limit -> 22f
-            R.layout.widget_compact -> 18f
-            else -> 20f
-        }
-        textDp(views, R.id.refresh_icon, iconSp)
+        val iconSp = if (layout == R.layout.widget_limit) 16f else 15f
+        views.setTextViewTextSize(R.id.refresh_icon, TypedValue.COMPLEX_UNIT_SP, iconSp)
         views.setTextColor(R.id.refresh_icon, if (light) LIGHT_TEXT else DARK_TEXT)
         views.setViewVisibility(R.id.refresh_icon, if (loading) View.GONE else View.VISIBLE)
         views.setViewVisibility(R.id.refresh_spinner, if (loading && !light) View.VISIBLE else View.GONE)
