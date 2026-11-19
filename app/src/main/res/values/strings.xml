@@ -8,12 +8,15 @@
     <string name="widget_flex_name">Limits</string>
     <string name="widget_flex_description">Drag between 1×1, 2×1, and 1×2. Same numbers in every size.</string>
     <string name="appearance">Appearance</string>
+    <string name="theme_dark">Dark</string>
+    <string name="theme_light">Light</string>
     <string name="alerts_title">Alerts</string>
     <string name="alert_percent">Weekly remaining</string>
     <string name="alert_dollars">Extra credits</string>
     <string name="alert_when">Alert at or below</string>
     <string name="notifications_off">Allow notifications for Cursor Limits to use alerts</string>
     <string name="refresh">Refresh</string>
+    <string name="refreshing">Updating…</string>
     <string name="login">Sign in to Cursor</string>
     <string name="logout">Sign out</string>
     <string name="example">Example, not your numbers</string>
@@ -21,11 +24,12 @@
     <string name="credits_label">Extra credits</string>
     <string name="interval_title">How often to refresh</string>
     <string name="battery">App battery</string>
+    <string name="battery_hint">Choose Unrestricted so updates are not delayed</string>
     <string name="close">Close</string>
     <string name="login_title">Sign in to Cursor</string>
     <string name="done">Done</string>
     <string name="login_hint">Sign in to your Cursor account.</string>
-    <string name="help">The widget shows your weekly limit, reset time, and extra credits.\n\nSign in with the button. The session stays on this phone. Signing out of Cursor in the browser ends it.\n\nAdd a widget: long-press the home screen, then Widgets. Card and Wide are the large ones. Limits is the small one: drag it between 1×1, 2×1, and 1×2. The green number is the percent left and the gold number is extra credits, with no extra signs, in every size. 1×1 shows only the percent. The arrow refreshes. 1×1 opens the app.\n\nCard and Wide can stretch to the full width of the screen. Hold the widget and drag a side handle. The numbers grow with the width and sit across the card, not against one edge.\n\nAppearance changes this screen and every widget on the home screen.\n\nAlerts fire once when the weekly percent left or the extra credits drop to the number you set. They can fire again after the number climbs back above it.\n\nAndroid refreshes a widget at most every 15 minutes. Samsung may wait longer while the screen is off. In the app battery settings, choose Unrestricted.</string>
+    <string name="help">Sign in once. The session stays on this phone.\n\nLong-press the home screen, then Widgets. Card and Wide are the large ones. Limits is the small one: 1×1, 2×1, and 1×2. Green is the percent left. Gold is extra credits. The arrow refreshes. 1×1 opens this app.\n\nAlerts are sent once when a number drops to the limit you set, and again after it climbs back above it.</string>
     <string-array name="theme_labels">
         <item>Dark</item>
         <item>Light</item>

@@ -7,5 +7,51 @@
         <item name="android:navigationBarColor">@color/bg</item>
         <item name="android:windowBackground">@color/bg</item>
         <item name="android:textColor">@color/text</item>
+        <item name="materialButtonStyle">@style/Widget.CursorLimit.Button</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+    <!-- One filled action. Corners and height stay the same in both themes. -->
+    <style name="Widget.CursorLimit.Button" parent="Widget.Material3.Button">
+        <item name="cornerRadius">16dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:minHeight">52dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="backgroundTint">@color/bar</item>
+    </style>
+
+    <style name="Widget.CursorLimit.Button.Quiet" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="cornerRadius">16dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:minHeight">52dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="android:textColor">@color/text</item>
+        <item name="strokeColor">@color/line</item>
+        <item name="backgroundTint">@color/card</item>
+    </style>
+
+    <!-- Dark / Light sit in one track. The selected side is filled in code. -->
+    <style name="Widget.CursorLimit.Segment" parent="Widget.Material3.Button">
+        <item name="cornerRadius">12dp</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
+        <item name="android:minHeight">44dp</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="backgroundTint">@android:color/transparent</item>
+        <item name="android:textColor">@color/text</item>
+        <item name="rippleColor">@color/line</item>
+    </style>
+
+    <style name="Widget.CursorLimit.Text" parent="Widget.Material3.Button.TextButton">
+        <item name="android:textColor">@color/bar</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:letterSpacing">0</item>
+        <item name="android:insetTop">0dp</item>
+        <item name="android:insetBottom">0dp</item>
     </style>
 </resources>

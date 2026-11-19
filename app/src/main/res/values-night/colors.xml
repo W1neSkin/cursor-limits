@@ -9,4 +9,6 @@
     <color name="track">#2C3344</color>
     <color name="gold">#E8C36A</color>
     <color name="error">#FF6B6B</color>
+    <color name="chip">#343C50</color>
+    <color name="line">#2C3344</color>
 </resources>

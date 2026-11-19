@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Closed refresh menu: a rounded well plus a chevron, no platform arrow. -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/chip" />
+            <corners android:radius="14dp" />
+        </shape>
+    </item>
+    <item
+        android:width="18dp"
+        android:height="18dp"
+        android:drawable="@drawable/ic_chevron"
+        android:end="14dp"
+        android:gravity="end|center_vertical" />
+</layer-list>

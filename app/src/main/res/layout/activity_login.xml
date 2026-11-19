@@ -15,7 +15,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/close_login"
-            style="@style/Widget.Material3.Button.TextButton"
+            style="@style/Widget.CursorLimit.Text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/close" />
@@ -32,7 +32,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/done_login"
-            style="@style/Widget.Material3.Button.TextButton"
+            style="@style/Widget.CursorLimit.Text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/done" />
@@ -42,8 +42,9 @@
         android:id="@+id/login_progress"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
-        android:layout_height="4dp"
-        android:max="100" />
+        android:layout_height="3dp"
+        android:max="100"
+        android:progressTint="@color/bar" />
 
     <TextView
         android:layout_width="match_parent"

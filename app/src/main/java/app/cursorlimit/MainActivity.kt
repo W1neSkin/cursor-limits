@@ -20,6 +20,7 @@ import android.widget.ProgressBar
 import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
+import android.content.res.ColorStateList
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
@@ -33,7 +34,6 @@ import java.time.Instant
 class MainActivity : AppCompatActivity() {
     private val intervals = intArrayOf(0, 15, 30, 60, 180, 360)
     private var ignoreSpinner = true
-    private var ignoreTheme = true
     private var ignoreAlerts = true
     private var loading = false
     private var pendingAlert: Int = 0
@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         findViewById<MaterialButton>(R.id.refresh_now).setOnClickListener { refresh() }
         findViewById<MaterialButton>(R.id.login_button).setOnClickListener { loginOrLogout() }
-        findViewById<MaterialButton>(R.id.battery_button).setOnClickListener { openBatterySettings() }
+        findViewById<View>(R.id.battery_button).setOnClickListener { openBatterySettings() }
         setupSpinner()
         setupTheme()
         setupAlerts()
@@ -143,30 +143,30 @@ class MainActivity : AppCompatActivity() {
         spinner.post { ignoreSpinner = false }
     }
 
+    /** Dark and Light are two buttons in one track, not a dropdown. */
     private fun setupTheme() {
-        val spinner = findViewById<Spinner>(R.id.theme)
-        val adapter = ArrayAdapter.createFromResource(
-            this,
-            R.array.theme_labels,
-            R.layout.spinner_item,
-        )
-        adapter.setDropDownViewResource(R.layout.spinner_dropdown)
-        spinner.adapter = adapter
-        spinner.setSelection(if (Prefs.isLight(this)) 1 else 0)
-        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                if (ignoreTheme) return
-                val light = position == 1
-                if (light == Prefs.isLight(this@MainActivity)) return
-                Prefs.saveTheme(this@MainActivity, light)
-                Theme.apply(this@MainActivity)
-                WidgetRenderer.update(this@MainActivity)
-                recreate()
-            }
+        findViewById<MaterialButton>(R.id.theme_dark).setOnClickListener { chooseTheme(light = false) }
+        findViewById<MaterialButton>(R.id.theme_light).setOnClickListener { chooseTheme(light = true) }
+        paintTheme(Prefs.isLight(this))
+    }
 
-            override fun onNothingSelected(parent: AdapterView<*>?) = Unit
-        }
-        spinner.post { ignoreTheme = false }
+    private fun chooseTheme(light: Boolean) {
+        if (light == Prefs.isLight(this)) return
+        Prefs.saveTheme(this, light)
+        Theme.apply(this)
+        WidgetRenderer.update(this)
+        recreate()
+    }
+
+    private fun paintTheme(light: Boolean) {
+        paintSegment(findViewById(R.id.theme_dark), selected = !light)
+        paintSegment(findViewById(R.id.theme_light), selected = light)
+    }
+
+    private fun paintSegment(button: MaterialButton, selected: Boolean) {
+        val fill = if (selected) R.color.chip else android.R.color.transparent
+        button.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, fill))
+        button.setTextColor(ContextCompat.getColor(this, if (selected) R.color.text else R.color.muted))
     }
 
     private fun setupAlerts() {
@@ -262,6 +262,10 @@ class MainActivity : AppCompatActivity() {
         findViewById<MaterialButton>(R.id.login_button).setText(
             if (token.isNullOrBlank()) R.string.login else R.string.logout,
         )
+        findViewById<MaterialButton>(R.id.refresh_now).apply {
+            setText(if (loading) R.string.refreshing else R.string.refresh)
+            isEnabled = !loading
+        }
     }
 
     private fun bind(text: CardText) {

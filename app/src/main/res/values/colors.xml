@@ -9,4 +9,7 @@
     <color name="track">#E3E7F0</color>
     <color name="gold">#8A5A10</color>
     <color name="error">#C53636</color>
+    <!-- Raised surface used for the selected theme segment and number fields. -->
+    <color name="chip">#FFFFFF</color>
+    <color name="line">#E3E7F0</color>
 </resources>

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Home of the app: the live limit, then appearance, alerts, and refresh. -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,14 +10,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="20dp">
+        android:paddingHorizontal="20dp"
+        android:paddingTop="24dp"
+        android:paddingBottom="32dp">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/app_name"
             android:textColor="@color/text"
-            android:textSize="28sp"
+            android:textSize="26sp"
             android:textStyle="bold" />
 
         <TextView
@@ -29,124 +32,23 @@
 
         <TextView
             android:id="@+id/example_label"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
+            android:background="@drawable/field_bg"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="4dp"
             android:text="@string/example"
             android:textColor="@color/gold"
-            android:textSize="13sp" />
+            android:textSize="12sp" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/widget_bg"
-            android:orientation="vertical"
-            android:padding="16dp">
-
-            <TextView
-                android:id="@+id/card_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="@color/text"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/card_limit"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textColor="@color/muted"
-                    android:textSize="13sp" />
-
-                <TextView
-                    android:id="@+id/card_remaining"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/green"
-                    android:textSize="13sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <ProgressBar
-                android:id="@+id/card_bar"
-                style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="match_parent"
-                android:layout_height="8dp"
-                android:layout_marginTop="8dp"
-                android:max="1000"
-                android:maxHeight="8dp"
-                android:minHeight="8dp"
-                android:progressDrawable="@drawable/usage_bar" />
-
-            <TextView
-                android:id="@+id/card_used"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:textColor="@color/muted"
-                android:textSize="12sp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/reset_label"
-                    android:textColor="@color/muted"
-                    android:textSize="13sp" />
-
-                <TextView
-                    android:id="@+id/card_reset"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="end"
-                    android:textColor="@color/text"
-                    android:textSize="13sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/credits_label"
-                    android:textColor="@color/muted"
-                    android:textSize="13sp" />
-
-                <TextView
-                    android:id="@+id/card_credits"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="end"
-                    android:textColor="@color/gold"
-                    android:textSize="13sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-        </LinearLayout>
+        <include layout="@layout/section_usage" />
 
         <TextView
             android:id="@+id/status_line"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="10dp"
             android:textColor="@color/muted"
             android:textSize="13sp" />
 
@@ -154,12 +56,12 @@
             android:id="@+id/refresh_now"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="16dp"
             android:text="@string/refresh" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/login_button"
-            style="@style/Widget.Material3.Button.TonalButton"
+            style="@style/Widget.CursorLimit.Button.Quiet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
@@ -168,168 +70,49 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="26dp"
             android:text="@string/appearance"
             android:textColor="@color/text"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <Spinner
-            android:id="@+id/theme"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:minHeight="48dp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="@string/alerts_title"
-            android:textColor="@color/text"
-            android:textSize="16sp"
+            android:textSize="15sp"
             android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:background="@drawable/segment_track"
+            android:orientation="horizontal"
+            android:padding="4dp">
 
-            <TextView
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/theme_dark"
+                style="@style/Widget.CursorLimit.Segment"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/alert_percent"
-                android:textColor="@color/text"
-                android:textSize="15sp" />
+                android:text="@string/theme_dark" />
 
-            <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/alert_percent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/alert_when"
-                android:textColor="@color/muted"
-                android:textSize="14sp" />
-
-            <EditText
-                android:id="@+id/percent_input"
-                android:layout_width="72dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:gravity="center"
-                android:importantForAutofill="no"
-                android:inputType="number"
-                android:minHeight="48dp"
-                android:textColor="@color/text"
-                android:textSize="16sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/theme_light"
+                style="@style/Widget.CursorLimit.Segment"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
-                android:text="%"
-                android:textColor="@color/muted"
-                android:textSize="14sp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/alert_dollars"
-                android:textColor="@color/text"
-                android:textSize="15sp" />
-
-            <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/alert_dollars"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:text="@string/theme_light" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+        <include layout="@layout/section_alerts" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/alert_when"
-                android:textColor="@color/muted"
-                android:textSize="14sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:text="$"
-                android:textColor="@color/muted"
-                android:textSize="16sp" />
-
-            <EditText
-                android:id="@+id/dollars_input"
-                android:layout_width="72dp"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:importantForAutofill="no"
-                android:inputType="number"
-                android:minHeight="48dp"
-                android:textColor="@color/text"
-                android:textSize="16sp" />
-        </LinearLayout>
+        <include layout="@layout/section_schedule" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="@string/interval_title"
-            android:textColor="@color/text"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <Spinner
-            android:id="@+id/interval"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:minHeight="48dp" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/battery_button"
-            style="@style/Widget.Material3.Button.TextButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="@string/battery" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="22dp"
             android:lineSpacingExtra="3dp"
             android:text="@string/help"
             android:textColor="@color/muted"
-            android:textSize="14sp" />
+            android:textSize="13sp" />
     </LinearLayout>
 </ScrollView>
