@@ -12,42 +12,29 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/remaining"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:autoSizeMaxTextSize="48sp"
-            android:autoSizeMinTextSize="20sp"
-            android:autoSizeStepGranularity="1sp"
-            android:autoSizeTextType="uniform"
-            android:fontFamily="sans-serif-condensed"
-            android:gravity="center"
-            android:maxLines="1"
-            android:text="46"
-            android:textColor="@color/green"
-            android:textStyle="bold" />
+        <ImageView
+            android:id="@+id/ring"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:contentDescription="@string/weekly_kicker"
+            android:scaleType="fitCenter" />
 
         <TextView
             android:id="@+id/credits_value"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.55"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
             android:autoSizeMaxTextSize="28sp"
             android:autoSizeMinTextSize="14sp"
-            android:autoSizeStepGranularity="1sp"
             android:autoSizeTextType="uniform"
-            android:fontFamily="sans-serif-condensed"
             android:gravity="center"
             android:maxLines="1"
-            android:text="13.95"
-            android:textColor="@color/gold"
             android:textStyle="bold" />
     </LinearLayout>
 
     <include
         layout="@layout/widget_refresh"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         android:layout_gravity="top|end" />
 </FrameLayout>

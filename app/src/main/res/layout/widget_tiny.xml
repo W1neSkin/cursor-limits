@@ -6,18 +6,10 @@
     android:background="@drawable/widget_bg"
     android:padding="6dp">
 
-    <TextView
-        android:id="@+id/remaining"
+    <ImageView
+        android:id="@+id/ring"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:autoSizeMaxTextSize="32sp"
-        android:autoSizeMinTextSize="14sp"
-        android:autoSizeStepGranularity="1sp"
-        android:autoSizeTextType="uniform"
-        android:fontFamily="sans-serif-condensed"
-        android:gravity="center"
-        android:maxLines="1"
-        android:text="46"
-        android:textColor="@color/green"
-        android:textStyle="bold" />
+        android:contentDescription="@string/weekly_kicker"
+        android:scaleType="fitCenter" />
 </FrameLayout>

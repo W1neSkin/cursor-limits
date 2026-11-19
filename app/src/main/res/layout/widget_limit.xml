@@ -1,149 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Wide card: the ring and the reset date are one block. Credits sit on the right. -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/widget_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/widget_bg"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="14dp">
+
+    <ImageView
+        android:id="@+id/ring"
+        android:layout_width="112dp"
+        android:layout_height="112dp"
+        android:contentDescription="@string/weekly_kicker"
+        android:scaleType="fitCenter" />
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text="Cursor · Super"
-            android:textColor="@color/text"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <include
-            layout="@layout/widget_refresh"
-            android:layout_width="40dp"
-            android:layout_height="40dp" />
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/remaining"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:gravity="center"
-        android:maxLines="1"
-        android:text="46% left"
-        android:textColor="@color/green"
-        android:textSize="28sp"
-        android:textStyle="bold" />
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:layout_marginTop="8dp">
-
-        <ProgressBar
-            android:id="@+id/usage_bar"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:max="1000"
-            android:maxHeight="10dp"
-            android:minHeight="10dp"
-            android:progress="542"
-            android:progressDrawable="@drawable/usage_bar_dark" />
-
-        <ProgressBar
-            android:id="@+id/usage_bar_light"
-            style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:max="1000"
-            android:maxHeight="10dp"
-            android:minHeight="10dp"
-            android:progress="542"
-            android:progressDrawable="@drawable/usage_bar_light"
-            android:visibility="gone" />
-    </FrameLayout>
-
-    <TextView
-        android:id="@+id/used"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:gravity="center"
-        android:maxLines="1"
-        android:text="Used 54.2%"
-        android:textColor="@color/muted"
-        android:textSize="13sp" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_marginStart="12dp"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/reset_caption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/reset_label"
-            android:textColor="@color/muted"
-            android:textSize="13sp" />
+            android:letterSpacing="0.12"
+            android:text="@string/resets_word"
+            android:textAllCaps="true"
+            android:textSize="11sp" />
 
         <TextView
-            android:id="@+id/reset_value"
-            android:layout_width="0dp"
+            android:id="@+id/reset_day"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="end"
-            android:text="Fri, Nov 20, 09:38"
-            android:textColor="@color/text"
-            android:textSize="13sp" />
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/reset_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="11sp"
+            android:visibility="gone" />
     </LinearLayout>
 
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_weight="1" />
+
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:orientation="horizontal">
+        android:gravity="end"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/credits_caption"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/credits_label"
-            android:textColor="@color/muted"
-            android:textSize="13sp" />
+            android:letterSpacing="0.12"
+            android:text="@string/extra_kicker"
+            android:textAllCaps="true"
+            android:textSize="11sp" />
 
         <TextView
             android:id="@+id/credits_value"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="end"
-            android:text="$13.95"
-            android:textColor="@color/gold"
-            android:textSize="16sp"
+            android:textSize="22sp"
             android:textStyle="bold" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/status"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        android:textColor="@color/muted"
-        android:textSize="11sp"
-        android:visibility="gone" />
+    <include
+        layout="@layout/widget_refresh"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="4dp" />
 </LinearLayout>

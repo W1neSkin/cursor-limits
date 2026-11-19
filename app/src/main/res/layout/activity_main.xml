@@ -364,17 +364,76 @@
                 android:textSize="14sp" />
         </LinearLayout>
 
-        <HorizontalScrollView
+        <!-- Hours and minutes scroll on their own. 00:00 means tap the percent. -->
+        <TextView
+            android:id="@+id/interval_caption"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:scrollbars="none">
+            android:layout_marginTop="6dp"
+            android:textColor="@color/split_bar_text"
+            android:textSize="14sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
 
             <LinearLayout
-                android:id="@+id/interval_chips"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal" />
-        </HorizontalScrollView>
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <NumberPicker
+                    android:id="@+id/hour_picker"
+                    android:layout_width="96dp"
+                    android:layout_height="132dp"
+                    android:descendantFocusability="blocksDescendants"
+                    android:theme="@style/Widget.CursorLimit.Picker" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:letterSpacing="0.12"
+                    android:text="@string/hours_label"
+                    android:textAllCaps="true"
+                    android:textColor="@color/split_bar_text"
+                    android:textSize="11sp" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="132dp"
+                android:gravity="center"
+                android:paddingHorizontal="12dp"
+                android:text=":"
+                android:textColor="@color/split_mint"
+                android:textSize="32sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <NumberPicker
+                    android:id="@+id/minute_picker"
+                    android:layout_width="96dp"
+                    android:layout_height="132dp"
+                    android:descendantFocusability="blocksDescendants"
+                    android:theme="@style/Widget.CursorLimit.Picker" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:letterSpacing="0.12"
+                    android:text="@string/minutes_label"
+                    android:textAllCaps="true"
+                    android:textColor="@color/split_bar_text"
+                    android:textSize="11sp" />
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

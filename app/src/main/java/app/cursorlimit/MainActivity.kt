@@ -5,31 +5,27 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.content.res.ColorStateList
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
-import android.view.Gravity
 import android.view.View
 import android.webkit.CookieManager
 import android.widget.ImageButton
-import android.widget.LinearLayout
+import android.widget.NumberPicker
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import app.cursorlimit.core.CardText
 import app.cursorlimit.core.UsageCard
 import java.time.Instant
 import java.time.ZoneId
-import kotlin.math.roundToInt
 
 /** The poster: weekly limit on the left, extra credits on the right. */
 class MainActivity : AppCompatActivity() {
-    private val intervals = intArrayOf(0, 15, 30, 60, 180, 360)
+    private var ignoreWheels = false
     private var loading = false
     private var pendingAlert = 0
     private var toastedError: String? = null
@@ -88,6 +84,7 @@ class MainActivity : AppCompatActivity() {
         )
         percentStepper.bind()
         dollarStepper.bind()
+        bindWheels()
         findViewById<TextView>(R.id.hero_percent).setOnClickListener { onHeroTap() }
         findViewById<TextView>(R.id.interval_label).setOnClickListener { onIntervalTap() }
         findViewById<View>(R.id.battery_button).setOnClickListener { openBatterySettings() }
@@ -238,17 +235,17 @@ class MainActivity : AppCompatActivity() {
 
     private fun renderBar() {
         val signedIn = !Prefs.token(this).isNullOrBlank()
-        val labels = resources.getStringArray(R.array.interval_labels)
-        val index = intervals.indexOf(Prefs.intervalMinutes(this)).let { if (it >= 0) it else 3 }
+        val phrase = intervalPhrase(Prefs.intervalMinutes(this))
         findViewById<TextView>(R.id.interval_label).text = when {
             loading -> getString(R.string.refreshing)
             !signedIn -> getString(R.string.sign_in)
-            else -> labels[index]
+            else -> phrase
         }
+        findViewById<TextView>(R.id.interval_caption).text = phrase
     }
 
     private fun showSheet() {
-        buildChips()
+        syncWheels()
         findViewById<View>(R.id.bottom_bar).visibility = View.GONE
         findViewById<View>(R.id.interval_sheet).visibility = View.VISIBLE
     }
@@ -258,39 +255,49 @@ class MainActivity : AppCompatActivity() {
         findViewById<View>(R.id.bottom_bar).visibility = View.VISIBLE
     }
 
-    private fun buildChips() {
-        val row = findViewById<LinearLayout>(R.id.interval_chips)
-        row.removeAllViews()
-        val current = Prefs.intervalMinutes(this)
-        val names = resources.getStringArray(R.array.interval_short)
-        names.forEachIndexed { index, name ->
-            val selected = intervals[index] == current
-            val chip = TextView(this).apply {
-                text = name
-                textSize = 14f
-                gravity = Gravity.CENTER
-                val padH = dp(14)
-                val padV = dp(8)
-                setPadding(padH, padV, padH, padV)
-                // mutate so one chip's mint tint does not paint the others.
-                background = ContextCompat.getDrawable(this@MainActivity, R.drawable.chip_bg)?.mutate()
-                backgroundTintList = ColorStateList.valueOf(
-                    ContextCompat.getColor(this@MainActivity, if (selected) R.color.split_mint else R.color.split_chip),
-                )
-                setTextColor(ContextCompat.getColor(this@MainActivity, if (selected) R.color.split_ink else R.color.split_bar_text))
-                setOnClickListener {
-                    Prefs.saveInterval(this@MainActivity, intervals[index])
-                    RefreshScheduler.apply(this@MainActivity)
-                    hideSheet()
-                    renderBar()
-                }
-            }
-            val params = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-            )
-            if (index > 0) params.marginStart = dp(8)
-            row.addView(chip, params)
+    /**
+     * Two wheels. Hours keep going past 6, up to 99. Minutes step by 15.
+     * 00:00 is the default and means there is no timer.
+     */
+    private fun bindWheels() {
+        val hours = findViewById<NumberPicker>(R.id.hour_picker)
+        val minutes = findViewById<NumberPicker>(R.id.minute_picker)
+        hours.minValue = 0
+        hours.maxValue = 99
+        hours.displayedValues = Array(100) { "%02d".format(it) }
+        hours.wrapSelectorWheel = false
+        minutes.minValue = 0
+        minutes.maxValue = 3
+        minutes.displayedValues = arrayOf("00", "15", "30", "45")
+        minutes.wrapSelectorWheel = true
+        val changed = NumberPicker.OnValueChangeListener { _, _, _ ->
+            if (ignoreWheels) return@OnValueChangeListener
+            Prefs.saveInterval(this, hours.value * 60 + minutes.value * 15)
+            RefreshScheduler.apply(this)
+            renderBar()
+        }
+        hours.setOnValueChangedListener(changed)
+        minutes.setOnValueChangedListener(changed)
+    }
+
+    private fun syncWheels() {
+        val total = Prefs.intervalMinutes(this).coerceAtLeast(0)
+        val hours = findViewById<NumberPicker>(R.id.hour_picker)
+        val minutes = findViewById<NumberPicker>(R.id.minute_picker)
+        ignoreWheels = true
+        hours.value = (total / 60).coerceIn(hours.minValue, hours.maxValue)
+        minutes.value = ((total % 60) / 15).coerceIn(0, 3)
+        ignoreWheels = false
+    }
+
+    private fun intervalPhrase(minutes: Int): String {
+        if (minutes <= 0) return getString(R.string.tap_percent)
+        val hours = minutes / 60
+        val rest = minutes % 60
+        return when {
+            hours == 0 -> "Every $rest min"
+            rest == 0 -> "Every $hours h"
+            else -> "Every $hours h $rest min"
         }
     }
 
@@ -320,8 +327,6 @@ class MainActivity : AppCompatActivity() {
         resetAtEpochMs = Instant.parse("2026-11-20T06:38:00Z").toEpochMilli(),
         creditCents = 1395,
     )
-
-    private fun dp(value: Int): Int = (value * resources.displayMetrics.density).roundToInt()
 
     companion object {
         private const val PERCENT = 1

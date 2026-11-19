@@ -34,6 +34,13 @@
         <item name="backgroundTint">@color/card</item>
     </style>
 
+    <!-- The two refresh wheels. The mint line is the selected row. -->
+    <style name="Widget.CursorLimit.Picker" parent="Theme.CursorLimit">
+        <item name="android:textColorPrimary">@color/split_bar_text</item>
+        <item name="android:textSize">22sp</item>
+        <item name="colorControlNormal">@color/split_mint</item>
+    </style>
+
     <style name="Widget.CursorLimit.Text" parent="Widget.Material3.Button.TextButton">
         <item name="android:textColor">@color/bar</item>
         <item name="android:textSize">15sp</item>

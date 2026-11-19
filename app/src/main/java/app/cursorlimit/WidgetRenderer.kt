@@ -10,6 +10,7 @@ import android.util.TypedValue
 import android.view.View
 import android.widget.RemoteViews
 import app.cursorlimit.core.CardText
+import java.time.ZoneId
 
 /** Draws each widget size from the last saved response. */
 object WidgetRenderer {
@@ -35,6 +36,8 @@ object WidgetRenderer {
     private const val LIGHT_MUTED = 0xFF5C667A.toInt()
     private const val LIGHT_GREEN = 0xFF0C8F5A.toInt()
     private const val LIGHT_GOLD = 0xFF8A5A10.toInt()
+    private const val DARK_TRACK = 0xFF2C3344.toInt()
+    private const val LIGHT_TRACK = 0xFFD5DBE6.toInt()
 
     fun hasAny(context: Context): Boolean {
         val manager = AppWidgetManager.getInstance(context)
@@ -46,6 +49,10 @@ object WidgetRenderer {
     fun update(context: Context, loading: Boolean = false) {
         val card = Prefs.card(context)
         val text = card?.let { CardText.from(it) }
+        val zone = ZoneId.systemDefault()
+        val day = card?.let { CardText.resetDay(it.resetAtEpochMs, zone) } ?: "—"
+        val clock = card?.let { CardText.resetClock(it.resetAtEpochMs, zone) }.orEmpty()
+        val left = card?.let { CardText.percentLeft(it.usedPercent) }
         val error = Prefs.error(context)
         val light = Prefs.isLight(context)
         val manager = AppWidgetManager.getInstance(context)
@@ -67,9 +74,9 @@ object WidgetRenderer {
                     1f
                 }
                 when (face.kind) {
-                    Kind.CARD -> bindCard(views, text, error, loading, light, scale)
-                    Kind.WIDE -> bindWide(views, text, light, scale)
-                    Kind.FLEX -> bindFlex(views, layout, text, light)
+                    Kind.CARD -> bindCard(context, views, text, day, clock, left, error, loading, light, scale)
+                    Kind.WIDE -> bindWide(context, views, text, day, left, light, scale)
+                    Kind.FLEX -> bindFlex(context, views, layout, text, left, light)
                 }
                 views.setOnClickPendingIntent(R.id.widget_root, open)
                 if (layout != R.layout.widget_tiny) {
@@ -120,8 +127,12 @@ object WidgetRenderer {
     }
 
     private fun bindCard(
+        context: Context,
         views: RemoteViews,
         text: CardText?,
+        day: String,
+        clock: String,
+        left: Int?,
         error: String?,
         loading: Boolean,
         light: Boolean,
@@ -129,28 +140,19 @@ object WidgetRenderer {
     ) {
         val textColor = if (light) LIGHT_TEXT else DARK_TEXT
         val muted = if (light) LIGHT_MUTED else DARK_MUTED
-        if (text != null) {
-            views.setTextViewText(R.id.title, text.title)
-            views.setTextViewText(R.id.remaining, text.remaining)
-            views.setTextViewText(R.id.used, text.used)
-            views.setTextViewText(R.id.reset_value, text.reset)
-            views.setTextViewText(R.id.credits_value, text.credits)
-            paintBar(views, text.bar, light)
-        } else {
-            views.setTextViewText(R.id.title, "Cursor")
-            views.setTextViewText(R.id.remaining, "—")
-            views.setTextViewText(R.id.used, "No data")
-            views.setTextViewText(R.id.reset_value, "—")
-            views.setTextViewText(R.id.credits_value, "—")
-            paintBar(views, 0, light)
-        }
-        views.setTextColor(R.id.title, textColor)
-        views.setTextColor(R.id.remaining, if (light) LIGHT_GREEN else DARK_GREEN)
-        views.setTextColor(R.id.used, muted)
+        val gold = if (light) LIGHT_GOLD else DARK_GOLD
+        views.setImageViewBitmap(
+            R.id.ring,
+            ring(context, 112, left, if (left == null) "—" else "$left%", light),
+        )
+        views.setTextViewText(R.id.reset_day, if (text != null) day else "—")
+        views.setTextViewText(R.id.reset_time, if (text != null) clock else "")
+        views.setTextViewText(R.id.credits_value, text?.credits ?: "—")
         views.setTextColor(R.id.reset_caption, muted)
-        views.setTextColor(R.id.reset_value, textColor)
-        views.setTextColor(R.id.credits_caption, muted)
-        views.setTextColor(R.id.credits_value, if (light) LIGHT_GOLD else DARK_GOLD)
+        views.setTextColor(R.id.reset_day, textColor)
+        views.setTextColor(R.id.reset_time, muted)
+        views.setTextColor(R.id.credits_caption, gold)
+        views.setTextColor(R.id.credits_value, gold)
         val status = when {
             loading -> "Updating…"
             !error.isNullOrBlank() -> error
@@ -165,51 +167,80 @@ object WidgetRenderer {
             val problem = !loading && !error.isNullOrBlank()
             views.setTextColor(R.id.status, if (problem) 0xFFC53636.toInt() else muted)
         }
-        val pad = (16f * scale).toInt().coerceAtLeast(16)
+        val pad = (14f * scale).toInt().coerceAtLeast(14)
         views.setViewPadding(R.id.widget_root, pad, pad, pad, pad)
-        textDp(views, R.id.title, 16f * scale)
-        textDp(views, R.id.remaining, 28f * scale)
-        textDp(views, R.id.used, 13f * scale)
-        textDp(views, R.id.reset_caption, 13f * scale)
-        textDp(views, R.id.reset_value, 13f * scale)
-        textDp(views, R.id.credits_caption, 13f * scale)
-        textDp(views, R.id.credits_value, 16f * scale)
+        textDp(views, R.id.reset_caption, 11f * scale)
+        textDp(views, R.id.reset_day, 22f * scale)
+        textDp(views, R.id.reset_time, 14f * scale)
+        textDp(views, R.id.credits_caption, 11f * scale)
+        textDp(views, R.id.credits_value, 22f * scale)
         textDp(views, R.id.status, 11f * scale)
     }
 
-    private fun bindWide(views: RemoteViews, text: CardText?, light: Boolean, scale: Float) {
-        views.setTextViewText(R.id.remaining, text?.remaining ?: "—")
+    private fun bindWide(
+        context: Context,
+        views: RemoteViews,
+        text: CardText?,
+        day: String,
+        left: Int?,
+        light: Boolean,
+        scale: Float,
+    ) {
+        val muted = if (light) LIGHT_MUTED else DARK_MUTED
+        views.setImageViewBitmap(R.id.ring, ring(context, 36, left, "", light))
+        views.setTextViewText(R.id.remaining, if (left == null) "—" else "$left%")
+        views.setTextViewText(R.id.reset_day, if (text != null) day else "—")
         views.setTextViewText(R.id.credits_value, text?.credits ?: "—")
         views.setTextColor(R.id.remaining, if (light) LIGHT_GREEN else DARK_GREEN)
+        views.setTextColor(R.id.left_label, if (light) LIGHT_GREEN else DARK_GREEN)
+        views.setTextColor(R.id.reset_day, muted)
         views.setTextColor(R.id.credits_value, if (light) LIGHT_GOLD else DARK_GOLD)
-        paintBar(views, text?.bar ?: 0, light)
-        val padX = (14f * scale).toInt().coerceAtLeast(14)
-        val padY = (8f * scale).toInt().coerceAtLeast(8)
+        val padX = (12f * scale).toInt().coerceAtLeast(12)
+        val padY = (6f * scale).toInt().coerceAtLeast(6)
         views.setViewPadding(R.id.widget_root, padX, padY, padX, padY)
         textDp(views, R.id.remaining, 20f * scale)
+        textDp(views, R.id.left_label, 11f * scale)
+        textDp(views, R.id.reset_day, 14f * scale)
         textDp(views, R.id.credits_value, 18f * scale)
     }
 
-    private fun bindFlex(views: RemoteViews, layout: Int, text: CardText?, light: Boolean) {
-        views.setTextViewText(R.id.remaining, barePercent(text?.percent))
-        views.setTextColor(R.id.remaining, if (light) LIGHT_GREEN else DARK_GREEN)
+    private fun bindFlex(
+        context: Context,
+        views: RemoteViews,
+        layout: Int,
+        text: CardText?,
+        left: Int?,
+        light: Boolean,
+    ) {
+        val dp = when (layout) {
+            R.layout.widget_square -> 96
+            R.layout.widget_tall -> 72
+            R.layout.widget_compact -> 56
+            else -> 64
+        }
+        val label = when {
+            left == null -> "—"
+            layout == R.layout.widget_tiny -> "$left"
+            else -> "$left"
+        }
+        views.setImageViewBitmap(R.id.ring, ring(context, dp, left, label, light))
         if (layout == R.layout.widget_tiny) return
-        views.setTextViewText(R.id.credits_value, bareMoney(text?.credits))
+        views.setTextViewText(R.id.credits_value, text?.credits ?: "—")
         views.setTextColor(R.id.credits_value, if (light) LIGHT_GOLD else DARK_GOLD)
     }
 
-    /** The narrow column shows the numbers without a percent sign or a dollar sign. */
-    private fun barePercent(value: String?): String {
-        if (value.isNullOrBlank() || value == "—") return "—"
-        return value.removeSuffix("%").trim().ifEmpty { "—" }
-    }
-
-    private fun bareMoney(value: String?): String {
-        if (value.isNullOrBlank() || value == "—") return "—"
-        val negative = value.startsWith("-")
-        val digits = value.removePrefix("-").removePrefix("$").trim()
-        if (digits.isEmpty()) return "—"
-        return if (negative) "-$digits" else digits
+    /** Draws the arc for one widget. [label] is empty on the wide row, where the number sits beside it. */
+    private fun ring(context: Context, dp: Int, left: Int?, label: String, light: Boolean): android.graphics.Bitmap {
+        val px = (dp * context.resources.displayMetrics.density).toInt().coerceAtLeast(32)
+        val fraction = (left ?: 0) / 100f
+        return RingBitmap.create(
+            size = px,
+            leftFraction = fraction,
+            label = label,
+            arcColor = if (light) LIGHT_GREEN else DARK_GREEN,
+            trackColor = if (light) LIGHT_TRACK else DARK_TRACK,
+            labelColor = if (light) LIGHT_TEXT else DARK_TEXT,
+        )
     }
 
     private fun showRefresh(views: RemoteViews, layout: Int, loading: Boolean, light: Boolean) {
@@ -223,13 +254,6 @@ object WidgetRenderer {
         views.setViewVisibility(R.id.refresh_icon, if (loading) View.GONE else View.VISIBLE)
         views.setViewVisibility(R.id.refresh_spinner, if (loading && !light) View.VISIBLE else View.GONE)
         views.setViewVisibility(R.id.refresh_spinner_light, if (loading && light) View.VISIBLE else View.GONE)
-    }
-
-    private fun paintBar(views: RemoteViews, bar: Int, light: Boolean) {
-        views.setProgressBar(R.id.usage_bar, 1000, bar, false)
-        views.setProgressBar(R.id.usage_bar_light, 1000, bar, false)
-        views.setViewVisibility(R.id.usage_bar, if (light) View.GONE else View.VISIBLE)
-        views.setViewVisibility(R.id.usage_bar_light, if (light) View.VISIBLE else View.GONE)
     }
 
     private fun openIntent(context: Context): PendingIntent {

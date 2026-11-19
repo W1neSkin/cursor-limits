@@ -33,6 +33,9 @@
     <string name="extra_kicker">Extra credits</string>
     <string name="alert_word">Alert</string>
     <string name="refresh_word">Refresh</string>
+    <string name="hours_label">Hours</string>
+    <string name="minutes_label">Minutes</string>
+    <string name="tap_percent">Tap the percent</string>
     <string name="step_down">Lower the alert</string>
     <string name="step_up">Raise the alert</string>
     <string name="theme_button">Theme</string>

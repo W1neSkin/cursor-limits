@@ -38,7 +38,8 @@ object Prefs {
         prefs(context).edit().putString(TOKEN, token.trim()).apply()
     }
 
-    fun intervalMinutes(context: Context): Int = prefs(context).getInt(INTERVAL, 60)
+    /** 0 is the default: no timer, refresh only by tapping the percent. */
+    fun intervalMinutes(context: Context): Int = prefs(context).getInt(INTERVAL, 0)
 
     fun saveInterval(context: Context, minutes: Int) {
         prefs(context).edit().putInt(INTERVAL, minutes).apply()

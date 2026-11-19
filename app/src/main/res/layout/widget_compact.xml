@@ -9,21 +9,12 @@
     android:paddingHorizontal="8dp"
     android:paddingVertical="6dp">
 
-    <TextView
-        android:id="@+id/remaining"
-        android:layout_width="0dp"
+    <ImageView
+        android:id="@+id/ring"
+        android:layout_width="56dp"
         android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:autoSizeMaxTextSize="28sp"
-        android:autoSizeMinTextSize="14sp"
-        android:autoSizeStepGranularity="1sp"
-        android:autoSizeTextType="uniform"
-        android:fontFamily="sans-serif-condensed"
-        android:gravity="center"
-        android:maxLines="1"
-        android:text="46"
-        android:textColor="@color/green"
-        android:textStyle="bold" />
+        android:contentDescription="@string/weekly_kicker"
+        android:scaleType="fitCenter" />
 
     <TextView
         android:id="@+id/credits_value"
@@ -32,13 +23,9 @@
         android:layout_weight="1"
         android:autoSizeMaxTextSize="22sp"
         android:autoSizeMinTextSize="12sp"
-        android:autoSizeStepGranularity="1sp"
         android:autoSizeTextType="uniform"
-        android:fontFamily="sans-serif-condensed"
         android:gravity="center"
         android:maxLines="1"
-        android:text="13.95"
-        android:textColor="@color/gold"
         android:textStyle="bold" />
 
     <include
