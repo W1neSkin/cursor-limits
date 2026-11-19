@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- The arrow stays tappable. The spinner replaces it only while numbers are loading. -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/refresh_button"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/refresh_icon"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/refresh"
+        android:gravity="center"
+        android:text="↻"
+        android:textColor="@color/text"
+        android:textSize="16sp" />
+
+    <ProgressBar
+        android:id="@+id/refresh_spinner"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_gravity="center"
+        android:indeterminate="true"
+        android:indeterminateDrawable="@drawable/widget_spin_dark"
+        android:indeterminateOnly="true"
+        android:visibility="gone" />
+
+    <ProgressBar
+        android:id="@+id/refresh_spinner_light"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_gravity="center"
+        android:indeterminate="true"
+        android:indeterminateDrawable="@drawable/widget_spin_light"
+        android:indeterminateOnly="true"
+        android:visibility="gone" />
+</FrameLayout>

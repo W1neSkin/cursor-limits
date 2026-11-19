@@ -73,8 +73,10 @@ object WidgetRenderer {
                 }
                 views.setOnClickPendingIntent(R.id.widget_root, open)
                 if (layout != R.layout.widget_tiny) {
+                    // The arrow stays. A ProgressBar spins in its place while the request runs.
+                    // A normal animation on the arrow does not play inside a home-screen widget.
                     views.setOnClickPendingIntent(R.id.refresh_button, refresh)
-                    views.setTextColor(R.id.refresh_button, if (light) LIGHT_TEXT else DARK_TEXT)
+                    showRefresh(views, layout, loading, light)
                 }
                 manager.updateAppWidget(id, views)
             }
@@ -208,6 +210,19 @@ object WidgetRenderer {
         val digits = value.removePrefix("-").removePrefix("$").trim()
         if (digits.isEmpty()) return "—"
         return if (negative) "-$digits" else digits
+    }
+
+    private fun showRefresh(views: RemoteViews, layout: Int, loading: Boolean, light: Boolean) {
+        val iconSp = when (layout) {
+            R.layout.widget_limit -> 18f
+            R.layout.widget_compact -> 14f
+            else -> 16f
+        }
+        textDp(views, R.id.refresh_icon, iconSp)
+        views.setTextColor(R.id.refresh_icon, if (light) LIGHT_TEXT else DARK_TEXT)
+        views.setViewVisibility(R.id.refresh_icon, if (loading) View.GONE else View.VISIBLE)
+        views.setViewVisibility(R.id.refresh_spinner, if (loading && !light) View.VISIBLE else View.GONE)
+        views.setViewVisibility(R.id.refresh_spinner_light, if (loading && light) View.VISIBLE else View.GONE)
     }
 
     private fun paintBar(views: RemoteViews, bar: Int, light: Boolean) {

@@ -41,13 +41,8 @@
         android:textColor="@color/gold"
         android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/refresh_button"
+    <include
+        layout="@layout/widget_refresh"
         android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:contentDescription="@string/refresh"
-        android:gravity="center"
-        android:text="↻"
-        android:textColor="@color/text"
-        android:textSize="14sp" />
+        android:layout_height="24dp" />
 </LinearLayout>

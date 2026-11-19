@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- animated-rotate is what a widget ProgressBar actually plays. A normal view animation does not run there. -->
+<animated-rotate xmlns:android="http://schemas.android.com/apk/res/android"
+    android:drawable="@drawable/widget_spin_arc_dark"
+    android:pivotX="50%"
+    android:pivotY="50%" />

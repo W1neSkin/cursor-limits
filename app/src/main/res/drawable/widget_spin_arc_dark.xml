@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Light arc on the dark widget. ProgressBar spins this while a refresh runs. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:innerRadiusRatio="3"
+    android:shape="ring"
+    android:thicknessRatio="8"
+    android:useLevel="false">
+    <gradient
+        android:centerColor="#88F4F6FB"
+        android:endColor="#F4F6FB"
+        android:startColor="#00F4F6FB"
+        android:type="sweep"
+        android:useLevel="false" />
+</shape>

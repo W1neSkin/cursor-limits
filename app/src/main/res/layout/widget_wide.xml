@@ -40,15 +40,10 @@
             android:textSize="18sp"
             android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/refresh_button"
+        <include
+            layout="@layout/widget_refresh"
             android:layout_width="28dp"
-            android:layout_height="28dp"
-            android:contentDescription="@string/refresh"
-            android:gravity="center"
-            android:text="↻"
-            android:textColor="@color/text"
-            android:textSize="16sp" />
+            android:layout_height="28dp" />
     </LinearLayout>
 
     <FrameLayout
