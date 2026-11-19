@@ -1,5 +1,7 @@
 # Cursor Limits
 
+Project page, with the APK download: [w1neskin.github.io/cursor-limits](https://w1neskin.github.io/cursor-limits/)
+
 Android home-screen widgets for a Cursor subscription. The card shows the plan name, how much of the weekly limit is left, when it resets, and the extra-credit balance in dollars. The phone loads those numbers itself after you sign in. Nothing is typed in by hand.
 
 The app is built for a phone, including a Samsung Galaxy in a five-column grid. It runs on Android 8 and newer.
