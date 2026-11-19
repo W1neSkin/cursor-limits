@@ -24,6 +24,7 @@ object Prefs {
     private const val ALERT_PERCENT = "alert_percent"
     private const val ALERT_DOLLARS_ON = "alert_dollars_on"
     private const val ALERT_DOLLARS = "alert_dollars"
+    private const val ALERT_DOLLAR_CENTS = "alert_dollar_cents"
     private const val PERCENT_ALERTED = "percent_alerted"
     private const val DOLLARS_ALERTED = "dollars_alerted"
     private const val NO_CREDITS = Long.MIN_VALUE
@@ -94,10 +95,10 @@ object Prefs {
         prefs(context).edit().putBoolean(ALERT_PERCENT_ON, enabled).apply()
     }
 
-    fun percentThreshold(context: Context): Int = prefs(context).getInt(ALERT_PERCENT, 5).coerceIn(0, 100)
+    fun percentThreshold(context: Context): Int = prefs(context).getInt(ALERT_PERCENT, 5).coerceIn(1, 100)
 
     fun savePercentThreshold(context: Context, percent: Int) {
-        prefs(context).edit().putInt(ALERT_PERCENT, percent.coerceIn(0, 100)).apply()
+        prefs(context).edit().putInt(ALERT_PERCENT, percent.coerceIn(1, 100)).apply()
     }
 
     fun dollarAlerts(context: Context): Boolean = prefs(context).getBoolean(ALERT_DOLLARS_ON, false)
@@ -106,10 +107,20 @@ object Prefs {
         prefs(context).edit().putBoolean(ALERT_DOLLARS_ON, enabled).apply()
     }
 
-    fun dollarThreshold(context: Context): Int = prefs(context).getInt(ALERT_DOLLARS, 5).coerceAtLeast(0)
+    /**
+     * Alert line in cents. Older builds stored whole dollars under [ALERT_DOLLARS].
+     * $5 from that build is read as 500 cents, so an update does not turn it into five cents.
+     */
+    fun dollarThresholdCents(context: Context): Int {
+        val store = prefs(context)
+        if (store.contains(ALERT_DOLLAR_CENTS)) {
+            return store.getInt(ALERT_DOLLAR_CENTS, 500).coerceAtLeast(0)
+        }
+        return store.getInt(ALERT_DOLLARS, 5).coerceAtLeast(0) * 100
+    }
 
-    fun saveDollarThreshold(context: Context, dollars: Int) {
-        prefs(context).edit().putInt(ALERT_DOLLARS, dollars.coerceAtLeast(0)).apply()
+    fun saveDollarThresholdCents(context: Context, cents: Int) {
+        prefs(context).edit().putInt(ALERT_DOLLAR_CENTS, cents.coerceAtLeast(0)).apply()
     }
 
     fun percentAlerted(context: Context): Boolean = prefs(context).getBoolean(PERCENT_ALERTED, false)

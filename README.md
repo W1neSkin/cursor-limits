@@ -53,20 +53,17 @@ The refresh mark updates immediately. On the 1×1 size there is no room for it, 
 
 ## The app
 
-![Settings: account card, appearance, alerts, and refresh interval](docs/images/settings-dark.png)
+Version 2.0 is one screen, split down the middle.
 
-Tap Sign in to Cursor and sign in with Google, GitHub, or email. Sign out in the app ends the login on this phone. Signing out of Cursor in a browser ends it too. Before you sign in, the card is marked Example, not your numbers.
+The left half is mint. It shows the weekly limit that is left, and under that the day and time the week resets. That date belongs only to the weekly limit.
 
-**Appearance** is Dark or Light. The choice restyles the settings screen and every widget already on the home screen.
+The right half shows extra credits in dollars. It does not reset on that day. A moon in the top corner means dark. A sun means light. Tap it to switch. The same choice restyles every widget already on the home screen.
 
-**Alerts** are off until you turn them on. Each one fires once when a value falls to the number you set, and it can fire again after the value climbs back above that number.
+Each half has an alert at the bottom. Tap the number and minus appears on the left, plus on the right. The digits stay where they were. One tap moves by 1% or by $1. Holding the button speeds up, then jumps by 5 and by 10. The percent runs from 1 to 100. The dollar alert runs from $1 up to the extra credits on screen, so a balance of $13.94 cannot be set past $13.94. The first change turns that alert on. Android 13 and newer asks for notification permission then. The alert fires once when the number falls to the line you set, and it can fire again after the number climbs back above it.
 
-- Weekly remaining: for example, at or below 5%.
-- Extra credits: for example, at or below $5.
+Before you sign in, the halves show an example and the bottom left says Sign in. Tap that, or tap the big percent. Sign in with Google, GitHub, or email. After that, the bottom left is how often the numbers refresh: Tap percent, 15 minutes, 30 minutes, 1 hour, 3 hours, or 6 hours. Tap it to change. Sign out is on that same sheet. Tap the big percent any time to refresh now. Battery opens the system page for this app. If updates stall overnight, set battery to Unrestricted.
 
-Android 13 and newer asks for notification permission the first time an alert is switched on.
-
-**How often to refresh** is Button only, 15 minutes, 30 minutes, 1 hour, 3 hours, or 6 hours. Android will not run a periodic widget update faster than every 15 minutes. A Samsung phone can wait longer while the screen is off. The refresh button does not wait for that schedule. If updates stall overnight, set the app’s battery mode to Unrestricted.
+Android will not run a periodic widget update faster than every 15 minutes. A Samsung phone can wait longer while the screen is off. Tapping the percent does not wait for that schedule.
 
 ## Install
 

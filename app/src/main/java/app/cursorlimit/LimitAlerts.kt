@@ -49,15 +49,14 @@ object LimitAlerts {
         }
         val cents = card.creditCents
         if (Prefs.dollarAlerts(context) && cents != null) {
-            val dollars = Prefs.dollarThreshold(context)
-            val leftDollars = cents / 100.0
-            if (cents <= dollars * 100L) {
+            val thresholdCents = Prefs.dollarThresholdCents(context)
+            if (cents <= thresholdCents) {
                 if (!Prefs.dollarsAlerted(context)) {
                     notify(
                         context,
                         DOLLARS_ID,
                         "Extra credits are low",
-                        String.format(java.util.Locale.US, "$%.2f left. Your alert is set at $%d.", leftDollars, dollars),
+                        "${CardText.formatCredits(cents)} left. Your alert is set at ${CardText.formatAlertDollars(thresholdCents)}.",
                     )
                     Prefs.saveDollarsAlerted(context, true)
                 }

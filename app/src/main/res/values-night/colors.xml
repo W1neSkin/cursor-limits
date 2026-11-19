@@ -11,4 +11,11 @@
     <color name="error">#FF6B6B</color>
     <color name="chip">#343C50</color>
     <color name="line">#2C3344</color>
+    <color name="split_mint">#3DDC97</color>
+    <color name="split_ink">#062116</color>
+    <color name="split_night">#14120C</color>
+    <color name="split_gold">#E8C36A</color>
+    <color name="split_bar">#0C0E12</color>
+    <color name="split_bar_text">#F4F6FB</color>
+    <color name="split_chip">#2A2824</color>
 </resources>

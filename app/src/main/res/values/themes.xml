@@ -3,9 +3,9 @@
     <style name="Theme.CursorLimit" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="colorPrimary">@color/bar</item>
         <item name="colorOnPrimary">#FFFFFF</item>
-        <item name="android:statusBarColor">@color/bg</item>
-        <item name="android:navigationBarColor">@color/bg</item>
-        <item name="android:windowBackground">@color/bg</item>
+        <item name="android:statusBarColor">@color/split_bar</item>
+        <item name="android:navigationBarColor">@color/split_bar</item>
+        <item name="android:windowBackground">@color/split_bar</item>
         <item name="android:textColor">@color/text</item>
         <item name="materialButtonStyle">@style/Widget.CursorLimit.Button</item>
         <item name="android:fontFamily">sans-serif</item>
@@ -32,19 +32,6 @@
         <item name="android:textColor">@color/text</item>
         <item name="strokeColor">@color/line</item>
         <item name="backgroundTint">@color/card</item>
-    </style>
-
-    <!-- Dark / Light sit in one track. The selected side is filled in code. -->
-    <style name="Widget.CursorLimit.Segment" parent="Widget.Material3.Button">
-        <item name="cornerRadius">12dp</item>
-        <item name="android:insetTop">0dp</item>
-        <item name="android:insetBottom">0dp</item>
-        <item name="android:minHeight">44dp</item>
-        <item name="android:textSize">15sp</item>
-        <item name="android:letterSpacing">0</item>
-        <item name="backgroundTint">@android:color/transparent</item>
-        <item name="android:textColor">@color/text</item>
-        <item name="rippleColor">@color/line</item>
     </style>
 
     <style name="Widget.CursorLimit.Text" parent="Widget.Material3.Button.TextButton">

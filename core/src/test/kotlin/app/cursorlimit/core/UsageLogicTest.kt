@@ -26,6 +26,8 @@ class UsageLogicTest {
         assertEquals("49%", text.percent)
         assertEquals("Used 50.9%", text.used)
         assertEquals("Fri, Nov 20, 09:38", text.reset)
+        assertEquals("NOV 20", CardText.resetDay(card.resetAtEpochMs, moscow))
+        assertEquals("09:38", CardText.resetClock(card.resetAtEpochMs, moscow))
         assertEquals("$13.95", text.credits)
         assertEquals(509, text.bar)
     }
@@ -110,6 +112,25 @@ class UsageLogicTest {
         assertEquals("Monthly limit", card.limitLabel)
         assertEquals(10.0, card.usedPercent, 0.001)
         assertEquals(9500L, card.creditCents)
+    }
+
+    @Test
+    fun alertStepsStopOnTheExactBalance() {
+        // $5 plus one dollar, while the balance is $13.94.
+        assertEquals(600, AlertSteps.up(500, 100, 1, 1394))
+        // The last dollar is not rounded up to $14.
+        assertEquals(1394, AlertSteps.up(1300, 100, 1, 1394))
+        assertEquals(1394, AlertSteps.up(1394, 100, 1, 1394))
+        // Holding jumps several dollars, then still stops on the balance.
+        assertEquals(1394, AlertSteps.up(1200, 100, 10, 1394))
+        // $13.94 minus one dollar lands on $13, not $12.94.
+        assertEquals(1300, AlertSteps.down(1394, 100, 1, 100))
+        assertEquals(900, AlertSteps.down(1394, 100, 5, 100))
+        assertEquals(100, AlertSteps.down(100, 100, 1, 100))
+        assertEquals(11, AlertSteps.up(10, 1, 1, 100))
+        assertEquals(1, AlertSteps.down(1, 1, 1, 1))
+        assertEquals("$5", CardText.formatAlertDollars(500))
+        assertEquals("$13.94", CardText.formatAlertDollars(1394))
     }
 
     @Test

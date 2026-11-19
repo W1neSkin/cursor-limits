@@ -20,6 +20,8 @@ data class CardText(
 ) {
     companion object {
         private val resetFormat = DateTimeFormatter.ofPattern("EEE, MMM d, HH:mm", Locale.US)
+        private val dayFormat = DateTimeFormatter.ofPattern("MMM d", Locale.US)
+        private val clockFormat = DateTimeFormatter.ofPattern("HH:mm", Locale.US)
 
         fun percentLeft(usedPercent: Double): Int {
             val shown = round1(usedPercent.coerceAtLeast(0.0))
@@ -44,6 +46,32 @@ data class CardText(
         fun formatReset(epochMs: Long?, zone: ZoneId): String {
             if (epochMs == null || epochMs <= 0L) return "—"
             return Instant.ofEpochMilli(epochMs).atZone(zone).format(resetFormat)
+        }
+
+        /** "NOV 20". The date stays in the weekly half so it is not read as a credit reset. */
+        fun resetDay(epochMs: Long?, zone: ZoneId): String {
+            if (epochMs == null || epochMs <= 0L) return "—"
+            return Instant.ofEpochMilli(epochMs).atZone(zone).format(dayFormat).uppercase(Locale.US)
+        }
+
+        /** "09:38". Empty when the cycle end is unknown, so the poster does not show a second dash. */
+        fun resetClock(epochMs: Long?, zone: ZoneId): String {
+            if (epochMs == null || epochMs <= 0L) return ""
+            return Instant.ofEpochMilli(epochMs).atZone(zone).format(clockFormat)
+        }
+
+        /**
+         * Alert money. Whole dollars stay "$5". The top step can be the exact balance, "$13.94".
+         */
+        fun formatAlertDollars(cents: Int): String {
+            val abs = kotlin.math.abs(cents)
+            val body = if (abs % 100 == 0) {
+                "${abs / 100}"
+            } else {
+                "${abs / 100}.${(abs % 100).toString().padStart(2, '0')}"
+            }
+            val sign = if (cents < 0) "-" else ""
+            return "$sign$$body"
         }
 
         fun updatedLabel(

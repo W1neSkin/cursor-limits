@@ -23,23 +23,44 @@
     <string name="reset_label">Reset</string>
     <string name="credits_label">Extra credits</string>
     <string name="interval_title">How often to refresh</string>
-    <string name="battery">App battery</string>
+    <string name="battery">Battery</string>
+    <string name="sign_in">Sign in</string>
+    <string name="sign_out">Sign out</string>
+    <string name="example_mark">Example</string>
+    <string name="weekly_kicker">Weekly limit</string>
+    <string name="left_word">Left</string>
+    <string name="resets_word">Resets</string>
+    <string name="extra_kicker">Extra credits</string>
+    <string name="alert_word">Alert</string>
+    <string name="refresh_word">Refresh</string>
+    <string name="step_down">Lower the alert</string>
+    <string name="step_up">Raise the alert</string>
+    <string name="theme_button">Theme</string>
+    <string name="refresh_numbers">Refresh the numbers</string>
     <string name="battery_hint">Choose Unrestricted so updates are not delayed</string>
     <string name="close">Close</string>
     <string name="login_title">Sign in to Cursor</string>
     <string name="done">Done</string>
     <string name="login_hint">Sign in to your Cursor account.</string>
-    <string name="help">Sign in once. The session stays on this phone.\n\nLong-press the home screen, then Widgets. Card and Wide are the large ones. Limits is the small one: 1×1, 2×1, and 1×2. Green is the percent left. Gold is extra credits. The arrow refreshes. 1×1 opens this app.\n\nAlerts are sent once when a number drops to the limit you set, and again after it climbs back above it.</string>
+    <string name="help">The left half is the weekly limit and the day it resets. The right half is extra credits. Tap an alert number, then minus or plus. Holding a side speeds up. A dollar alert stops at the current extra credits. The moon or sun switches the theme. The bottom bar sets how often to refresh, and Battery opens the system page for Unrestricted.</string>
     <string-array name="theme_labels">
         <item>Dark</item>
         <item>Light</item>
     </string-array>
     <string-array name="interval_labels">
-        <item>Button only</item>
+        <item>Tap percent</item>
         <item>Every 15 minutes</item>
         <item>Every 30 minutes</item>
         <item>Every hour</item>
         <item>Every 3 hours</item>
         <item>Every 6 hours</item>
+    </string-array>
+    <string-array name="interval_short">
+        <item>Button</item>
+        <item>15m</item>
+        <item>30m</item>
+        <item>1h</item>
+        <item>3h</item>
+        <item>6h</item>
     </string-array>
 </resources>

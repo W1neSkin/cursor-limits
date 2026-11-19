@@ -12,4 +12,12 @@
     <!-- Raised surface used for the selected theme segment and number fields. -->
     <color name="chip">#FFFFFF</color>
     <color name="line">#E3E7F0</color>
+    <!-- Split poster. The weekly half stays mint in both themes. -->
+    <color name="split_mint">#3DDC97</color>
+    <color name="split_ink">#062116</color>
+    <color name="split_night">#F6F1E6</color>
+    <color name="split_gold">#8A5A10</color>
+    <color name="split_bar">#EFEAE1</color>
+    <color name="split_bar_text">#161A22</color>
+    <color name="split_chip">#E4DDD2</color>
 </resources>

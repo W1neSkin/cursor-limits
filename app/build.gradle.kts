@@ -26,8 +26,8 @@ android {
         applicationId = "app.cursorlimit"
         minSdk = 26
         targetSdk = 35
-        versionCode = 14
-        versionName = "1.13"
+        versionCode = 15
+        versionName = "2.0"
     }
 
     // The keystore and its password stay out of git. An update can replace
