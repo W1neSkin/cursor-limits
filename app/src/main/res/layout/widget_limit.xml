@@ -14,7 +14,8 @@
         android:layout_width="112dp"
         android:layout_height="112dp"
         android:contentDescription="@string/weekly_kicker"
-        android:scaleType="fitCenter" />
+        android:scaleType="fitCenter"
+        android:src="@drawable/widget_ring_preview" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -52,9 +53,10 @@
             android:visibility="gone" />
     </LinearLayout>
 
-    <Space
+    <!-- Space is rejected by the home-screen host, so the widget fails to add. -->
+    <TextView
         android:layout_width="0dp"
-        android:layout_height="1dp"
+        android:layout_height="match_parent"
         android:layout_weight="1" />
 
     <LinearLayout

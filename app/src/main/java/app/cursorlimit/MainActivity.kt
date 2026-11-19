@@ -15,9 +15,11 @@ import android.widget.ImageButton
 import android.widget.NumberPicker
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowInsetsControllerCompat
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import app.cursorlimit.core.CardText
 import app.cursorlimit.core.UsageCard
 import java.time.Instant
@@ -87,9 +89,30 @@ class MainActivity : AppCompatActivity() {
         bindWheels()
         findViewById<TextView>(R.id.hero_percent).setOnClickListener { onHeroTap() }
         findViewById<TextView>(R.id.interval_label).setOnClickListener { onIntervalTap() }
+        findViewById<View>(R.id.interval_done).setOnClickListener { hideSheet() }
         findViewById<View>(R.id.battery_button).setOnClickListener { openBatterySettings() }
         findViewById<View>(R.id.sign_out).setOnClickListener { signOut() }
         findViewById<ImageButton>(R.id.theme_button).setOnClickListener { chooseTheme(!Prefs.isLight(this)) }
+        val swipe = findViewById<SwipeRefreshLayout>(R.id.refresh_swipe)
+        swipe.setColorSchemeColors(getColor(R.color.split_mint))
+        swipe.setProgressBackgroundColorSchemeColor(getColor(R.color.split_night))
+        swipe.setOnRefreshListener { onHeroTap() }
+        // The wheels replace the bottom bar. Back closes them instead of leaving the app.
+        onBackPressedDispatcher.addCallback(
+            this,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    val sheet = findViewById<View>(R.id.interval_sheet)
+                    if (sheet.visibility == View.VISIBLE) {
+                        hideSheet()
+                    } else {
+                        isEnabled = false
+                        onBackPressedDispatcher.onBackPressed()
+                        isEnabled = true
+                    }
+                }
+            },
+        )
         paintThemeIcon()
     }
 
@@ -121,6 +144,7 @@ class MainActivity : AppCompatActivity() {
         dollarStepper.close()
         hideSheet()
         if (Prefs.token(this).isNullOrBlank()) {
+            findViewById<SwipeRefreshLayout>(R.id.refresh_swipe).isRefreshing = false
             startActivity(Intent(this, LoginActivity::class.java))
         } else {
             refresh()
@@ -225,6 +249,7 @@ class MainActivity : AppCompatActivity() {
         percentStepper.show()
         dollarStepper.show()
         renderBar()
+        findViewById<SwipeRefreshLayout>(R.id.refresh_swipe).isRefreshing = loading
         val error = Prefs.error(this)
         if (!loading && !error.isNullOrBlank() && error != toastedError) {
             toastedError = error

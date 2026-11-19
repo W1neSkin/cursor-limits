@@ -10,10 +10,16 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-    <LinearLayout
+    <!-- Swipe down anywhere on the poster to refresh. The wheels stay outside this. -->
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refresh_swipe"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight="1">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -290,6 +296,8 @@
         </LinearLayout>
     </LinearLayout>
 
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
     <LinearLayout
         android:id="@+id/bottom_bar"
         android:layout_width="match_parent"
@@ -435,5 +443,19 @@
                     android:textSize="11sp" />
             </LinearLayout>
         </LinearLayout>
+
+        <!-- The sheet hides the bottom bar, so this is the way back. -->
+        <TextView
+            android:id="@+id/interval_done"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/chip_bg"
+            android:backgroundTint="@color/split_mint"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="center"
+            android:text="@string/done"
+            android:textColor="@color/split_ink"
+            android:textSize="15sp" />
     </LinearLayout>
 </LinearLayout>

@@ -14,7 +14,8 @@
         android:layout_width="56dp"
         android:layout_height="match_parent"
         android:contentDescription="@string/weekly_kicker"
-        android:scaleType="fitCenter" />
+        android:scaleType="fitCenter"
+        android:src="@drawable/widget_ring_preview" />
 
     <TextView
         android:id="@+id/credits_value"

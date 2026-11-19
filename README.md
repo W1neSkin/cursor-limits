@@ -53,7 +53,7 @@ The refresh mark updates immediately. On the 1×1 size there is no room for it, 
 
 ## The app
 
-Version 2.1 is one screen, split down the middle. The home-screen card shows a ring for the weekly remainder, the reset date beside that ring, and extra credits on the right.
+Version 2.2 is one screen, split down the middle. Swipe down to refresh. The home-screen card shows a ring for the weekly remainder, the reset date beside that ring, and extra credits on the right.
 
 The left half is mint. It shows the weekly limit that is left, and under that the day and time the week resets. That date belongs only to the weekly limit.
 
@@ -61,7 +61,7 @@ The right half shows extra credits in dollars. It does not reset on that day. A 
 
 Each half has an alert at the bottom. Tap the number and minus appears on the left, plus on the right. The digits stay where they were. One tap moves by 1% or by $1. Holding the button speeds up, then jumps by 5 and by 10. The percent runs from 1 to 100. The dollar alert runs from $1 up to the extra credits on screen, so a balance of $13.94 cannot be set past $13.94. The first change turns that alert on. Android 13 and newer asks for notification permission then. The alert fires once when the number falls to the line you set, and it can fire again after the number climbs back above it.
 
-Before you sign in, the halves show an example and the bottom left says Sign in. Tap that, or tap the big percent. Sign in with Google, GitHub, or email. After that, the bottom left opens two wheels: hours and minutes scroll separately. Minutes step by 15. Hours are not capped at 6. The wheels start at 00:00, which means there is no timer and a tap on the percent refreshes. Sign out is on that same sheet. Battery opens the system page for this app. If updates stall overnight, set battery to Unrestricted.
+Before you sign in, the halves show an example and the bottom left says Sign in. Tap that, or tap the big percent. Sign in with Google, GitHub, or email. After that, the bottom left opens two wheels: hours and minutes scroll separately. Minutes step by 15. Hours are not capped at 6. The wheels start at 00:00, which means there is no timer. Done, or the system back button, closes the wheels. Swipe down on the screen to refresh now. Sign out is on that same sheet. Battery opens the system page for this app. If updates stall overnight, set battery to Unrestricted.
 
 Android will not run a periodic widget update faster than every 15 minutes. A Samsung phone can wait longer while the screen is off. Tapping the percent does not wait for that schedule.
 
