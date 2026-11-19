@@ -6,12 +6,11 @@ import java.time.Instant
 import kotlin.math.roundToLong
 
 /**
- * Цифры карточки.
+ * The numbers on the card.
  *
- * Недельный процент берём из GetCurrentPeriodUsage: у тарифа Super сводка
- * /api/usage-summary иногда показывает месячное окно и 0%, хотя в редакторе
- * уже потрачена недельная квота. Сводка остаётся запасным источником.
- * Дополнительные кредиты — остаток предоплаты в центах (usdRemainingCents).
+ * The weekly percent comes from GetCurrentPeriodUsage. The usage summary
+ * can show a monthly window instead, so it is only a fallback.
+ * Extra credits are the remaining prepaid cents (usdRemainingCents).
  */
 data class UsageCard(
     val planName: String,
@@ -87,7 +86,7 @@ object UsageParser {
         }
     }
 
-    /** Окно около 7 дней — недельный лимит, около месяца — месячный. */
+    /** About 7 days is a weekly limit. About a month is a monthly limit. */
     private fun limitLabel(start: Long?, end: Long?): String {
         if (start == null || end == null || end <= start) return "Limit"
         val days = (end - start) / 86_400_000.0
@@ -99,9 +98,9 @@ object UsageParser {
     }
 
     /**
-     * Остаток дополнительных кредитов лежит в разных ответах, и нулевой из них
-     * не должен прятать ненулевой. Берём наибольший: предоплату объединённого
-     * аккаунта, гранты со страницы трат, prepaid из Grok и баланс Stripe.
+     * Extra credits can show up in more than one response. A zero in one
+     * response must not hide a real balance in another. Use the largest of
+     * the unified prepaid balance, spending-page grants, Grok prepaid, and Stripe.
      */
     private fun credits(
         plan: JsonObject?,

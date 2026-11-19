@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Cursor Limits — виджет лимитов Cursor для Android</title>
-  <meta name="description" content="Виджет на рабочий стол Android для лимитов Cursor: недельный лимит, сколько осталось, время сброса и дополнительные кредиты. Скачать APK. Android home-screen widget for Cursor weekly limits and extra credits." />
+  <title>Cursor Limits — Android home screen widget</title>
+  <meta name="description" content="Cursor Limits is an Android app. Its home screen widgets show your plan, weekly limit, reset time, and extra credits." />
   <link rel="canonical" href="https://w1neskin.github.io/cursor-limits/" />
-  <meta property="og:title" content="Cursor Limits — виджет лимитов Cursor для Android" />
-  <meta property="og:description" content="Недельный лимит, время сброса и дополнительные кредиты прямо на рабочем столе телефона." />
+  <meta property="og:title" content="Cursor Limits — Android home screen widget" />
+  <meta property="og:description" content="See your Cursor plan, weekly limit, reset time, and extra credits on the Android home screen." />
   <meta property="og:image" content="https://w1neskin.github.io/cursor-limits/images/home-dark.png" />
   <meta property="og:url" content="https://w1neskin.github.io/cursor-limits/" />
   <meta property="og:type" content="website" />
@@ -24,7 +24,7 @@
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
     "downloadUrl": "https://github.com/W1neSkin/cursor-limits/releases/download/v1.9/cursor-limit.apk",
     "softwareVersion": "1.9",
-    "description": "Home-screen widgets for a Cursor subscription: weekly limit, reset time, and extra credits.",
+    "description": "Home screen widgets for a Cursor plan: weekly limit, reset time, and extra credits.",
     "url": "https://w1neskin.github.io/cursor-limits/"
   }
   </script>
@@ -62,10 +62,7 @@
       background: rgba(14, 16, 22, 0.78);
       border-bottom: 1px solid var(--line);
     }
-    .bar {
-      display: flex; align-items: center; gap: 16px;
-      height: 64px;
-    }
+    .bar { display: flex; align-items: center; gap: 16px; height: 64px; }
     .brand { display: flex; align-items: center; gap: 10px; font-weight: 650; letter-spacing: -0.03em; text-decoration: none; }
     .mark {
       width: 28px; height: 28px; border-radius: 8px; background: #12151c;
@@ -82,17 +79,13 @@
     nav { margin-left: auto; display: flex; gap: 18px; align-items: center; }
     nav a { color: var(--muted); text-decoration: none; font-size: 14px; }
     nav a:hover { color: var(--text); }
-    .lang {
-      border: 1px solid var(--line); background: transparent; color: var(--text);
-      border-radius: 999px; padding: 6px 10px; font: inherit; font-size: 13px; cursor: pointer;
-    }
     .hero { padding: 64px 0 24px; display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 36px; align-items: center; }
     .eyebrow { color: var(--green); font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; margin: 0 0 12px; }
     h1 { font-size: clamp(36px, 5vw, 58px); line-height: 1.02; letter-spacing: -0.045em; margin: 0 0 16px; }
     .lede { color: var(--muted); font-size: 18px; margin: 0 0 24px; max-width: 46ch; }
     .actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
     .btn {
-      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      display: inline-flex; align-items: center; justify-content: center;
       min-height: 48px; padding: 0 18px; border-radius: 14px; text-decoration: none;
       font-weight: 600; border: 1px solid transparent;
     }
@@ -113,7 +106,7 @@
     }
     .card h3 { margin: 0 0 8px; font-size: 18px; letter-spacing: -0.03em; }
     .card p, .card li { color: var(--muted); font-size: 15px; }
-    .card ol, .card ul { margin: 0; padding-left: 18px; }
+    .card ul { margin: 0; padding-left: 18px; }
     .swatch { width: 10px; height: 10px; border-radius: 99px; display: inline-block; margin-right: 6px; }
     .green { background: var(--green); }
     .gold { background: var(--gold); }
@@ -133,9 +126,6 @@
       border-top: 1px solid var(--line); margin-top: 28px; padding: 28px 0 80px; color: var(--muted); font-size: 14px;
     }
     footer a { color: var(--text); }
-    code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.92em; color: var(--gold); }
-    html[lang="ru"] .en { display: none; }
-    html[lang="en"] .ru { display: none; }
     @media (max-width: 860px) {
       .hero, .split, .grid { grid-template-columns: 1fr; }
       nav .quiet { display: none; }
@@ -149,12 +139,9 @@
     <div class="wrap bar">
       <a class="brand" href="#top"><span class="mark" aria-hidden="true"></span> Cursor Limits</a>
       <nav>
-        <a class="quiet ru" href="#widgets">Виджеты</a>
-        <a class="quiet en" href="#widgets">Widgets</a>
-        <a class="quiet ru" href="#install">Установка</a>
-        <a class="quiet en" href="#install">Install</a>
+        <a class="quiet" href="#widgets">Widgets</a>
+        <a class="quiet" href="#install">Install</a>
         <a href="https://github.com/W1neSkin/cursor-limits">GitHub</a>
-        <button class="lang" type="button" id="lang">EN</button>
       </nav>
     </div>
   </header>
@@ -162,113 +149,85 @@
   <main id="top" class="wrap">
     <div class="hero">
       <div>
-        <p class="eyebrow">Android 8+</p>
-        <h1 class="ru">Лимиты Cursor на рабочем столе</h1>
-        <h1 class="en">Cursor limits on your home screen</h1>
-        <p class="lede ru">Виджет сам забирает недельный лимит, время сброса и дополнительные кредиты. Цифры не нужно вписывать руками: один вход в аккаунт Cursor, и карточка обновляется на телефоне.</p>
-        <p class="lede en">The widget reads your weekly limit, reset time, and extra credits. You do not type the numbers. Sign in once and the card stays on the home screen.</p>
+        <p class="eyebrow">Android 8 or newer</p>
+        <h1>Your Cursor limit on the home screen</h1>
+        <p class="lede">Cursor Limits shows your plan, how much of the weekly limit is left, when it resets, and your extra credits.</p>
         <div class="actions">
-          <a class="btn primary" href="https://github.com/W1neSkin/cursor-limits/releases/download/v1.9/cursor-limit.apk">
-            <span class="ru">Скачать APK · 1.9</span>
-            <span class="en">Download APK · 1.9</span>
-          </a>
-          <a class="btn ghost" href="https://github.com/W1neSkin/cursor-limits">
-            <span class="ru">Код на GitHub</span>
-            <span class="en">Source on GitHub</span>
-          </a>
+          <a class="btn primary" href="https://github.com/W1neSkin/cursor-limits/releases/download/v1.9/cursor-limit.apk">Download APK · 1.9</a>
+          <a class="btn ghost" href="https://github.com/W1neSkin/cursor-limits">View on GitHub</a>
         </div>
-        <p class="fine ru">Около 7 МБ. Ставится поверх уже установленного приложения, сессия и виджеты сохраняются.</p>
-        <p class="fine en">About 7 MB. Install it over the existing app and the session and widgets stay.</p>
+        <p class="fine">About 7 MB. If the app is already installed, install this file over it.</p>
       </div>
       <div class="frame">
-        <img src="images/home-dark.png" alt="Cursor Limits widgets: card, wide row, and small sizes 1×1, 2×1, 1×2" />
+        <img src="images/home-dark.png" alt="Cursor Limits widgets on a dark background: a full card, a wide row, and small sizes" />
       </div>
     </div>
 
     <section>
-      <h2 class="ru">Что означают цифры</h2>
-      <h2 class="en">What the numbers mean</h2>
-      <p class="sub ru">На картинках пример: осталось 46%, сброс в пятницу 20 ноября в 09:38, дополнительные кредиты $13.95. На вашем телефоне будут ваши значения.</p>
-      <p class="sub en">The pictures use a sample: 46% left, reset Fri Nov 20 at 09:38, extra credits $13.95. Your phone shows your account.</p>
+      <h2>What you see</h2>
+      <p class="sub">The pictures use example numbers: 46% left, reset on Fri, Nov 20 at 09:38, and $13.95 in extra credits. Your phone shows your own account.</p>
       <table>
         <thead>
-          <tr>
-            <th class="ru">Строка</th><th class="en">Line</th>
-            <th class="ru">Смысл</th><th class="en">Meaning</th>
-          </tr>
+          <tr><th>On the card</th><th>What it is</th></tr>
         </thead>
         <tbody>
           <tr>
             <td>Cursor · Super</td>
-            <td class="ru">Название тарифа.</td>
-            <td class="en">Your plan name.</td>
+            <td>Your plan name. Super is only an example.</td>
           </tr>
           <tr>
             <td><span class="swatch green"></span>46% left</td>
-            <td class="ru">Сколько недельного лимита ещё не израсходовано.</td>
-            <td class="en">How much of the weekly limit is still unused.</td>
+            <td>How much of this week’s limit is still left.</td>
           </tr>
           <tr>
             <td><span class="swatch blue"></span>Used 54.2%</td>
-            <td class="ru">Сколько уже потрачено. Синяя полоска — та же доля.</td>
-            <td class="en">How much is already used. The blue bar is that same share.</td>
+            <td>How much of this week’s limit is already used. The blue bar shows the same thing.</td>
           </tr>
           <tr>
             <td>Reset</td>
-            <td class="ru">Местное время, когда недельный цикл закончится.</td>
-            <td class="en">Local time when the weekly cycle ends.</td>
+            <td>The day and time when the weekly limit starts over, in your local time.</td>
           </tr>
           <tr>
-            <td><span class="swatch gold"></span>$13.95</td>
-            <td class="ru">Дополнительные кредиты в долларах, отдельно от включённого лимита.</td>
-            <td class="en">Prepaid extra credits in dollars, separate from the included limit.</td>
+            <td><span class="swatch gold"></span>Extra credits</td>
+            <td>Extra credits in dollars, separate from the weekly limit.</td>
           </tr>
         </tbody>
       </table>
     </section>
 
     <section id="widgets">
-      <h2 class="ru">Три виджета</h2>
-      <h2 class="en">Three widgets</h2>
-      <p class="sub ru">Долгое нажатие на рабочий стол, затем «Виджеты». Все три показывают одни и те же данные.</p>
-      <p class="sub en">Long-press the home screen, then Widgets. All three show the same account.</p>
+      <h2>Three widgets</h2>
+      <p class="sub">Touch and hold the home screen, then choose Widgets. Pick one of these.</p>
       <div class="grid">
         <article class="card">
           <h3>Limits Card</h3>
-          <p class="ru">Полная карточка: тариф, процент, полоска, сброс и кредиты. Тянется на всю ширину экрана, на сетке из пяти колонок это 5×2. Цифры увеличиваются вместе с шириной и не прилипают к левому краю.</p>
-          <p class="en">The full card: plan, percent, bar, reset, and credits. Drag it to the full width of the screen. On a five-column grid that is 5×2. The type grows with the width.</p>
+          <p>The full card: plan, percent left, blue bar, reset time, and extra credits. You can drag it wider, up to the full width of the screen. On a screen with five columns, that is 5 cells wide and 2 cells tall.</p>
         </article>
         <article class="card">
           <h3>Limits Wide</h3>
-          <p class="ru">Одна строка: процент, сумма кредитов и полоска под ними. Тоже растягивается на всю ширину, до 5×1.</p>
-          <p class="en">One row: percent, credits, and the bar underneath. It stretches across the screen the same way, up to 5×1.</p>
+          <p>One row: percent left, extra credits, and the blue bar under them. It also drags out to the full width of the screen, one cell tall.</p>
         </article>
         <article class="card">
           <h3>Limits</h3>
-          <p class="ru">Маленький виджет. Потяните край: 1×1 показывает только процент, 2×1 — процент и кредиты в ряд, 1×2 — те же два числа столбиком. Знаки % и $ убраны, чтобы строка не рвалась. Зелёное число — остаток лимита, золотое — кредиты.</p>
-          <p class="en">The small one. Drag an edge: 1×1 is the percent only, 2×1 puts percent and credits side by side, 1×2 stacks them. The % and $ signs are left off so the line does not wrap. Green is the limit left, gold is credits.</p>
+          <p>The small widget. Drag the edge to change the size. 1×1 shows the green number only. 2×1 shows the green and gold numbers side by side. 1×2 stacks them. Green is the percent left. Gold is the extra credits.</p>
         </article>
       </div>
+      <p class="sub" style="margin-top: 18px;">The ↻ button updates the numbers right away. The smallest 1×1 widget has no button. Tap it to open the app.</p>
     </section>
 
     <section>
       <div class="split">
         <div class="frame">
-          <img src="images/settings-dark.png" alt="Cursor Limits settings: appearance, alerts, and refresh interval" />
+          <img src="images/settings-dark.png" alt="Cursor Limits settings screen with Appearance, Alerts, and How often to refresh" />
         </div>
         <div>
-          <h2 class="ru">Вход, тема, обновление, уведомления</h2>
-          <h2 class="en">Sign-in, theme, refresh, alerts</h2>
+          <h2>In the app</h2>
           <div class="card">
             <ul>
-              <li class="ru">Кнопка «Sign in to Cursor» открывает вход Cursor: Google, GitHub или почта. Сессия остаётся на телефоне в зашифрованном хранилище. Ключ копировать не нужно.</li>
-              <li class="en">Sign in to Cursor opens Cursor’s own login: Google, GitHub, or email. The session stays on the phone, encrypted. There is no key to copy.</li>
-              <li class="ru">Appearance переключает тёмную и светлую тему и у экрана, и у всех виджетов.</li>
-              <li class="en">Appearance switches light and dark for the screen and every widget.</li>
-              <li class="ru">Обновление: только по кнопке, либо каждые 15 минут, 30 минут, час, 3 часа или 6 часов. Чаще 15 минут Android виджет сам не будит. Кнопка ↻ на карточке обновляет сразу.</li>
-              <li class="en">Refresh can be button only, or every 15 minutes, 30 minutes, hour, 3 hours, or 6 hours. Android will not poll a widget faster than every 15 minutes. The ↻ button updates immediately.</li>
-              <li class="ru">Уведомления выключены, пока вы их не включите. Например: когда недельного лимита осталось 5% и когда дополнительных кредитов осталось $5. Каждое срабатывает один раз и может повториться, когда цифра снова поднимется выше порога.</li>
-              <li class="en">Alerts stay off until you enable them. For example: weekly limit at or below 5%, and extra credits at or below $5. Each fires once, and can fire again after the number climbs back above the threshold.</li>
+              <li>Tap Sign in to Cursor. Sign in with Google, GitHub, or email.</li>
+              <li>Appearance is Dark or Light. It changes the app and every widget on the home screen.</li>
+              <li>How often to refresh can be Button only, Every 15 minutes, Every 30 minutes, Every hour, Every 3 hours, or Every 6 hours. A timed refresh waits at least 15 minutes. The ↻ button does not wait.</li>
+              <li>Alerts start off. Weekly remaining warns you when the percent left drops to the number you set, such as 5%. Extra credits warns you when the dollar amount drops to the number you set, such as $5. Each alert is sent once. It can be sent again after the number goes back up.</li>
             </ul>
           </div>
         </div>
@@ -282,41 +241,21 @@
     </section>
 
     <section id="install">
-      <h2 class="ru">Как поставить на телефон</h2>
-      <h2 class="en">Install on the phone</h2>
+      <h2>Put it on your phone</h2>
       <div class="steps">
-        <div class="step"><div class="num">1</div><div class="ru">Нажмите «Скачать APK» и дождитесь файла <code>cursor-limit.apk</code>.</div><div class="en">Tap Download APK and wait for <code>cursor-limit.apk</code>.</div></div>
-        <div class="step"><div class="num">2</div><div class="ru">Откройте файл. Android спросит разрешение ставить приложения из браузера или загрузок. Разрешите.</div><div class="en">Open the file. Android asks permission to install from the browser or Downloads. Allow it.</div></div>
-        <div class="step"><div class="num">3</div><div class="ru">Откройте Cursor Limits и войдите в свой аккаунт. Если страница входа не открывается, сеть может быть в регионе, который Cursor не обслуживает.</div><div class="en">Open Cursor Limits and sign in. If the login page fails, the network may be in a region Cursor does not serve.</div></div>
-        <div class="step"><div class="num">4</div><div class="ru">Добавьте виджет: долгое нажатие на рабочий стол → Виджеты → Cursor Limits. Если обновления ночью замирают, в батарее приложения выберите «Без ограничений».</div><div class="en">Add a widget: long-press the home screen, Widgets, Cursor Limits. If overnight updates stall, set the app battery mode to Unrestricted.</div></div>
+        <div class="step"><div class="num">1</div><div>Tap Download APK and wait for the file cursor-limit.apk.</div></div>
+        <div class="step"><div class="num">2</div><div>Open the file. If Android asks, allow installs from your browser or from Downloads.</div></div>
+        <div class="step"><div class="num">3</div><div>Open Cursor Limits and tap Sign in to Cursor.</div></div>
+        <div class="step"><div class="num">4</div><div>Touch and hold the home screen, open Widgets, and add Limits Card, Limits Wide, or Limits.</div></div>
       </div>
-      <p class="fine ru">SHA-256 файла 1.9: <code>4df4ae2ed81c6347ce509d34582d5a28ae4c15e0d04b5afe790ee59ff443e23b</code></p>
-      <p class="fine en">SHA-256 of the 1.9 file: <code>4df4ae2ed81c6347ce509d34582d5a28ae4c15e0d04b5afe790ee59ff443e23b</code></p>
+      <p class="fine">On a Samsung phone, updates can pause while the screen is off. In the app, tap App battery and choose Unrestricted.</p>
     </section>
   </main>
 
   <footer>
     <div class="wrap">
-      <p class="ru">Cursor Limits читает те же ответы, что личный кабинет Cursor. Это не публичный документированный API: если формат ответа изменится, карточка покажет ошибку, а не выдуманную цифру.</p>
-      <p class="en">Cursor Limits reads the same responses as the Cursor dashboard. That is not a documented public API. If the response changes, the card shows an error instead of an invented number.</p>
       <p><a href="https://github.com/W1neSkin/cursor-limits">github.com/W1neSkin/cursor-limits</a></p>
     </div>
   </footer>
-  <script>
-    var root = document.documentElement;
-    var button = document.getElementById("lang");
-    function setLang(lang) {
-      root.lang = lang;
-      button.textContent = lang === "ru" ? "EN" : "RU";
-      try { localStorage.setItem("cursor-limits-lang", lang); } catch (e) {}
-    }
-    button.addEventListener("click", function () {
-      setLang(root.lang === "ru" ? "en" : "ru");
-    });
-    try {
-      var saved = localStorage.getItem("cursor-limits-lang");
-      if (saved === "en" || saved === "ru") setLang(saved);
-    } catch (e) {}
-  </script>
 </body>
 </html>

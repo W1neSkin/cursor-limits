@@ -14,8 +14,8 @@ sealed class FetchResult {
 }
 
 /**
- * Те же неофициальные запросы, которыми пользуется личный кабинет Cursor.
- * Ответы и ключ в лог не пишем: это данные аккаунта.
+ * The same requests the Cursor dashboard uses.
+ * Account data is not written to the log.
  */
 class UsageClient {
     fun fetch(rawToken: String): FetchResult {

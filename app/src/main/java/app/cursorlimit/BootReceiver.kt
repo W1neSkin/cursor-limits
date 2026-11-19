@@ -4,7 +4,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 
-/** После перезагрузки Samsung не всегда сам поднимает отложенную работу. */
+/** After a reboot, Samsung does not always start the scheduled refresh on its own. */
 class BootReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         if (intent.action == Intent.ACTION_BOOT_COMPLETED ||

@@ -14,10 +14,9 @@ import app.cursorlimit.core.SessionToken
 import com.google.android.material.button.MaterialButton
 
 /**
- * Вход на cursor.com внутри приложения.
- * HttpOnly-куку WorkosCursorSessionToken страница из JavaScript не отдаёт,
- * но CookieManager её видит — поэтому ключ можно забрать после входа.
- * Google иногда запрещает вход во встроенном окне. Тогда ключ вставляют вручную.
+ * Sign in to cursor.com inside the app.
+ * The page does not expose the HttpOnly session cookie to JavaScript.
+ * CookieManager can read it after sign-in.
  */
 class LoginActivity : AppCompatActivity() {
     private lateinit var web: WebView
@@ -39,7 +38,7 @@ class LoginActivity : AppCompatActivity() {
         cookies.setAcceptThirdPartyCookies(web, true)
         web.settings.javaScriptEnabled = true
         web.settings.domStorageEnabled = true
-        // Без обычного Chrome-агента Google часто пишет «браузер не поддерживается».
+        // Google often blocks sign-in unless the page looks like normal Chrome.
         web.settings.userAgentString = CHROME
         web.webViewClient = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {

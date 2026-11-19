@@ -11,9 +11,9 @@ import androidx.work.WorkManager
 import java.util.concurrent.TimeUnit
 
 /**
- * Кнопка обновляет сразу. Период — через WorkManager.
- * Система не даёт повторять работу чаще чем раз в 15 минут, и во сне
- * Samsung может сдвинуть запуск ещё дальше. Поэтому кнопка на виджете обязательна.
+ * The button updates immediately. The timer uses WorkManager.
+ * Android does not repeat the work faster than every 15 minutes, and Samsung
+ * can delay it further while the phone sleeps.
  */
 object RefreshScheduler {
     const val ACTION_UPDATED = "app.cursorlimit.UPDATED"
@@ -33,7 +33,7 @@ object RefreshScheduler {
             manager.cancelUniqueWork(PERIODIC)
             return
         }
-        // Ниже 15 минут Android запрос не примет, поэтому поднимаем до минимума.
+        // Android rejects a repeat faster than 15 minutes, so the interval is raised to that.
         val safe = minutes.coerceAtLeast(15).toLong()
         val request = PeriodicWorkRequestBuilder<RefreshWorker>(safe, TimeUnit.MINUTES)
             .setConstraints(

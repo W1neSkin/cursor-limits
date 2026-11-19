@@ -5,7 +5,7 @@ import android.content.Intent
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 
-/** Сетевой запрос нельзя делать в обработчике виджета: у него есть около 10 секунд. */
+/** The network call cannot run inside the widget callback. That callback has about 10 seconds. */
 class RefreshWorker(context: Context, params: WorkerParameters) : Worker(context, params) {
     override fun doWork(): Result {
         val app = applicationContext
@@ -33,7 +33,7 @@ class RefreshWorker(context: Context, params: WorkerParameters) : Worker(context
             WidgetRenderer.update(app)
             app.sendBroadcast(Intent(RefreshScheduler.ACTION_UPDATED).setPackage(app.packageName))
         }
-        // Повтор сам по себе сессию не починит. Следующая попытка — кнопка или период.
+        // A retry does not fix a bad login. The next try is the button or the timer.
         return Result.success()
     }
 }

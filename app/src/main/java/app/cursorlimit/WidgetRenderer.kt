@@ -11,7 +11,7 @@ import android.view.View
 import android.widget.RemoteViews
 import app.cursorlimit.core.CardText
 
-/** Рисует каждый размер виджета из последнего сохранённого ответа. */
+/** Draws each widget size from the last saved response. */
 object WidgetRenderer {
     private data class Face(
         val provider: Class<out AppWidgetProvider>,
@@ -92,7 +92,7 @@ object WidgetRenderer {
         return sizeDp(options, AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH, AppWidgetManager.OPTION_APPWIDGET_MAX_WIDTH)
     }
 
-    /** Форма, а не точное число клеток: лаунчеры сообщают разную ширину одной ячейки. */
+    /** Uses the widget's shape. Launchers report different widths for one cell. */
     private fun flexLayout(manager: AppWidgetManager, id: Int): Int {
         val options = manager.getAppWidgetOptions(id)
         val width = sizeDp(options, AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH, AppWidgetManager.OPTION_APPWIDGET_MAX_WIDTH)
@@ -196,7 +196,7 @@ object WidgetRenderer {
         views.setTextColor(R.id.credits_value, if (light) LIGHT_GOLD else DARK_GOLD)
     }
 
-    /** Узкая колонка не вмещает «45%» и «$13.94», поэтому знаки остаются только цветом. */
+    /** The narrow column shows the numbers without a percent sign or a dollar sign. */
     private fun barePercent(value: String?): String {
         if (value.isNullOrBlank() || value == "—") return "—"
         return value.removeSuffix("%").trim().ifEmpty { "—" }

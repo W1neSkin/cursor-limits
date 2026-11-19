@@ -3,7 +3,7 @@ package app.cursorlimit
 import android.content.Context
 import androidx.appcompat.app.AppCompatDelegate
 
-/** Светлая или тёмная тема приложения. Виджеты красятся отдельно, тем же выбором. */
+/** Light or dark theme for the app. Widgets use the same choice, painted on their own. */
 object Theme {
     fun apply(context: Context) {
         AppCompatDelegate.setDefaultNightMode(

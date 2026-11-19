@@ -14,7 +14,7 @@ import androidx.core.content.ContextCompat
 import app.cursorlimit.core.CardText
 import app.cursorlimit.core.UsageCard
 
-/** Одно уведомление на пересечение порога. Повтор — после того как цифра снова выше. */
+/** One notification when a value crosses the line. It can fire again after the value goes back up. */
 object LimitAlerts {
     private const val CHANNEL = "limits"
     private const val PERCENT_ID = 41
@@ -91,7 +91,7 @@ object LimitAlerts {
         try {
             NotificationManagerCompat.from(context).notify(id, notification)
         } catch (_: SecurityException) {
-            // Разрешение сняли между проверкой и отправкой.
+            // The permission was removed between the check and the send.
         }
     }
 }

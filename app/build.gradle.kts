@@ -30,8 +30,8 @@ android {
         versionName = "1.9"
     }
 
-    // Пароль и файл ключа не коммитятся. Обновление поверх уже стоящего
-    // приложения возможно только тем же ключом, что подписал прошлую сборку.
+    // The keystore and its password stay out of git. An update can replace
+    // an installed app only when it is signed with the same key.
     val keystoreFile = file("release.keystore")
     val storePass = signingProp("CURSOR_LIMIT_STORE_PASSWORD")
     val keyPass = signingProp("CURSOR_LIMIT_KEY_PASSWORD") ?: storePass

@@ -5,9 +5,9 @@ import java.nio.charset.StandardCharsets
 import java.util.Base64
 
 /**
- * Сессия Cursor в браузере — это кука WorkosCursorSessionToken.
- * Внутри неё две части: id пользователя и JWT, через «::» (в куке часто как %3A%3A).
- * Виджету нужен JWT как Bearer-токен для api2.cursor.sh и та же кука для cursor.com.
+ * A Cursor browser login is the WorkosCursorSessionToken cookie.
+ * It has two parts, a user id and a JWT, separated by "::" (often %3A%3A in the cookie).
+ * The app sends the JWT as a Bearer token to api2.cursor.sh and the same cookie to cursor.com.
  */
 object SessionToken {
     fun accessToken(raw: String): String? = split(raw)?.jwt
@@ -18,7 +18,7 @@ object SessionToken {
         return userFromJwt(parts.jwt)
     }
 
-    /** Заголовок Cookie для запросов к cursor.com. Без id пользователя куку не собрать. */
+    /** Cookie header for cursor.com. It needs the user id. */
     fun cookieHeader(raw: String): String? {
         val jwt = accessToken(raw) ?: return null
         val user = userId(raw) ?: return null
@@ -52,7 +52,7 @@ object SessionToken {
         } catch (_: Exception) {
             null
         } ?: return null
-        // sub бывает «user_abc» или «google-oauth2|user_abc». Нужна часть после «|».
+        // sub can be "user_abc" or "google-oauth2|user_abc". The user id is the part after "|".
         val id = sub.substringAfterLast('|').trim()
         return id.takeIf { it.isNotEmpty() }
     }

@@ -2,7 +2,7 @@ plugins {
     kotlin("jvm")
 }
 
-// Чистая логика без Android, чтобы её можно было прогнать обычным JUnit.
+// Plain logic with no Android dependencies, so the tests can run as normal JUnit.
 java {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17

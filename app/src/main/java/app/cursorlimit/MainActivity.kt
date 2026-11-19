@@ -29,7 +29,7 @@ import app.cursorlimit.core.UsageCard
 import com.google.android.material.button.MaterialButton
 import java.time.Instant
 
-/** Экран настроек: вход, период и та же карточка, что стоит на рабочем столе. */
+/** Settings: sign-in, refresh interval, and the same card as the home screen widget. */
 class MainActivity : AppCompatActivity() {
     private val intervals = intArrayOf(0, 15, 30, 60, 180, 360)
     private var ignoreSpinner = true

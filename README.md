@@ -2,7 +2,7 @@
 
 Project page, with the APK download: [w1neskin.github.io/cursor-limits](https://w1neskin.github.io/cursor-limits/)
 
-Android home-screen widgets for a Cursor subscription. The card shows the plan name, how much of the weekly limit is left, when it resets, and the extra-credit balance in dollars. The phone loads those numbers itself after you sign in. Nothing is typed in by hand.
+Android home-screen widgets for a Cursor subscription. The card shows the plan name, how much of the weekly limit is left, when it resets, and the extra credits in dollars.
 
 The app is built for a phone, including a Samsung Galaxy in a five-column grid. It runs on Android 8 and newer.
 
@@ -20,7 +20,7 @@ The pictures below are interface previews with sample numbers (`46%` left, `$13.
 | Percent left | Share of the current weekly limit that is still unused. |
 | Used | Share already spent, to one decimal place. |
 | Reset | Local date and time when the weekly cycle ends. |
-| Extra credits | Prepaid balance in dollars, separate from the included weekly limit. |
+| Extra credits | Extra credits in dollars, separate from the weekly limit. |
 
 Green is the remaining weekly percent. Gold is the extra-credit balance. The blue bar is how much of the week is already used.
 
@@ -30,7 +30,7 @@ Long-press the home screen, open Widgets, and pick one of three:
 
 ### Limits Card
 
-The full card: plan, percent left, usage bar, reset time, and extra credits. It starts wide enough for about five columns and can be dragged narrower, down to four. As it grows, the type grows with it. The percent and the “used” line stay centered, and the reset time and credit balance sit on opposite edges, so a wider card does not leave the text stuck to the left.
+The full card: plan, percent left, blue bar, reset time, and extra credits. Drag it wider to fill the row. On a five-column screen that is 5 cells wide and 2 cells tall.
 
 ### Limits Wide
 
@@ -45,9 +45,9 @@ One small widget that you resize by dragging an edge.
 | 1×1 | The remaining percent only. Tap it to open the app. |
 | 2×1 | Remaining percent and extra credits, side by side, plus refresh. |
 | 1×2 | The same two numbers stacked, plus refresh. |
-| 2×2 | The same two numbers, larger. A launcher that lets you drag both width and height will offer this size as well. |
+| 2×2 | The same two numbers, larger, if you drag both the width and the height. |
 
-On this widget the percent sign and the dollar sign are left off, because a one-cell column cannot hold `46%` and `$13.95` without breaking the line. The color still says which number is which, and the typeface is the same condensed face in every small size.
+Green is the percent left. Gold is the extra credits. The 1×1 size shows only the green number.
 
 The refresh mark updates immediately. On the 1×1 size there is no room for it, so a tap opens the app instead.
 
@@ -55,9 +55,7 @@ The refresh mark updates immediately. On the 1×1 size there is no room for it, 
 
 ![Settings: account card, appearance, alerts, and refresh interval](docs/images/settings-dark.png)
 
-Sign in with the button. A page from Cursor opens inside the app (Google, GitHub, or email, whichever the account uses). When sign-in finishes, the session stays on the phone in encrypted storage. Signing out of the app clears it. Signing out of Cursor in a browser ends it too.
-
-There is no key to copy and no number to type. The sample card before sign-in is labeled as an example.
+Tap Sign in to Cursor and sign in with Google, GitHub, or email. Sign out in the app ends the login on this phone. Signing out of Cursor in a browser ends it too. Before you sign in, the card is marked Example, not your numbers.
 
 **Appearance** is Dark or Light. The choice restyles the settings screen and every widget already on the home screen.
 
@@ -107,14 +105,6 @@ keytool -genkeypair -v \
   -keyalg RSA -keysize 2048 -validity 10000
 ```
 
-## Where the numbers come from
-
-After sign-in, the app calls the same dashboard endpoints the Cursor website uses, with the session from that sign-in. This is not a documented public API. If Cursor changes a response, the card shows an error instead of an invented number, and the parser has to be updated.
-
-The weekly percent comes from the current billing period. The dollar line prefers a positive prepaid balance, then a spending-page grant, then other credit fields the dashboard returns. It does not add those sources together.
-
-Sign-in itself opens Cursor’s own login host. In a region Cursor does not serve, that page can fail until the phone uses a network Cursor accepts.
-
 ## Project layout
 
 | Path | Role |
@@ -124,8 +114,6 @@ Sign-in itself opens Cursor’s own login host. In a region Cursor does not serv
 | `core/src/test/` | Unit tests for the period, the credit balance, and the card copy. |
 | `dist/cursor-limit.apk` | Latest signed debug build for sideloading. |
 
-`download/` is an old note that the numbers are not entered by hand. The installed app is the product.
-
 ## Privacy
 
-The session token never leaves the phone except as the `Authorization` header and cookie on requests to Cursor. It is not written into the APK and it is not part of this repository. Widgets read the last saved card from local storage. They do not contain the token.
+The login stays on the phone. It is not inside the APK and it is not in this repository. The widgets show the last saved numbers.

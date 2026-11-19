@@ -6,7 +6,7 @@ import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
 import app.cursorlimit.core.UsageCard
 
-/** Сессия и последняя карточка. Ключ сессии лежит в зашифрованных настройках. */
+/** The login and the last card. The login is kept in encrypted settings. */
 object Prefs {
     private const val TOKEN = "token"
     private const val INTERVAL = "interval"
@@ -148,7 +148,7 @@ object Prefs {
                 EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM,
             )
         } catch (_: Exception) {
-            // Шифрование на части прошивок падает. Файл всё равно приватный, бэкап выключен.
+            // Encryption fails on some phones. The file is still private, and backup is off.
             app.getSharedPreferences("cursor_limit_plain", Context.MODE_PRIVATE)
         }
         cached = created
