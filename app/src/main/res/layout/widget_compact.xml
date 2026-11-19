@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/widget_bg"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingHorizontal="8dp"
+    android:paddingVertical="6dp">
+
+    <TextView
+        android:id="@+id/remaining"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:autoSizeMaxTextSize="28sp"
+        android:autoSizeMinTextSize="14sp"
+        android:autoSizeStepGranularity="1sp"
+        android:autoSizeTextType="uniform"
+        android:fontFamily="sans-serif-condensed"
+        android:gravity="center"
+        android:maxLines="1"
+        android:text="46"
+        android:textColor="@color/green"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/credits_value"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:autoSizeMaxTextSize="22sp"
+        android:autoSizeMinTextSize="12sp"
+        android:autoSizeStepGranularity="1sp"
+        android:autoSizeTextType="uniform"
+        android:fontFamily="sans-serif-condensed"
+        android:gravity="center"
+        android:maxLines="1"
+        android:text="13.95"
+        android:textColor="@color/gold"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/refresh_button"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:contentDescription="@string/refresh"
+        android:gravity="center"
+        android:text="↻"
+        android:textColor="@color/text"
+        android:textSize="14sp" />
+</LinearLayout>

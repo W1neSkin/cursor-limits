@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/widget_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/widget_bg"
+    android:padding="8dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/remaining"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:autoSizeMaxTextSize="40sp"
+            android:autoSizeMinTextSize="18sp"
+            android:autoSizeStepGranularity="1sp"
+            android:autoSizeTextType="uniform"
+            android:fontFamily="sans-serif-condensed"
+            android:gravity="center"
+            android:maxLines="1"
+            android:text="46"
+            android:textColor="@color/green"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/credits_value"
+            android:layout_width="match_parent"
+            android:layout_height="26dp"
+            android:layout_marginTop="2dp"
+            android:autoSizeMaxTextSize="18sp"
+            android:autoSizeMinTextSize="11sp"
+            android:autoSizeStepGranularity="1sp"
+            android:autoSizeTextType="uniform"
+            android:fontFamily="sans-serif-condensed"
+            android:gravity="center"
+            android:maxLines="1"
+            android:text="13.95"
+            android:textColor="@color/gold"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/refresh_button"
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:layout_gravity="top|end"
+        android:contentDescription="@string/refresh"
+        android:fontFamily="sans-serif"
+        android:gravity="center"
+        android:text="↻"
+        android:textColor="@color/text"
+        android:textSize="16sp" />
+</FrameLayout>
