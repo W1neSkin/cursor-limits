@@ -17,8 +17,8 @@
 
     <ProgressBar
         android:id="@+id/refresh_spinner"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:layout_gravity="center"
         android:indeterminate="true"
         android:indeterminateDrawable="@drawable/widget_spin_dark"
@@ -27,8 +27,8 @@
 
     <ProgressBar
         android:id="@+id/refresh_spinner_light"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:layout_gravity="center"
         android:indeterminate="true"
         android:indeterminateDrawable="@drawable/widget_spin_light"

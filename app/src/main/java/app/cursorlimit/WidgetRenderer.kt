@@ -214,9 +214,9 @@ object WidgetRenderer {
 
     private fun showRefresh(views: RemoteViews, layout: Int, loading: Boolean, light: Boolean) {
         val iconSp = when (layout) {
-            R.layout.widget_limit -> 18f
-            R.layout.widget_compact -> 14f
-            else -> 16f
+            R.layout.widget_limit -> 22f
+            R.layout.widget_compact -> 18f
+            else -> 20f
         }
         textDp(views, R.id.refresh_icon, iconSp)
         views.setTextColor(R.id.refresh_icon, if (light) LIGHT_TEXT else DARK_TEXT)
