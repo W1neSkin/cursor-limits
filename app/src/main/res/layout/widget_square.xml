@@ -10,9 +10,8 @@
 
     <ImageView
         android:id="@+id/ring"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
         android:contentDescription="@string/weekly_kicker"
         android:scaleType="fitCenter"
         android:src="@drawable/widget_ring_preview" />
@@ -22,12 +21,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:autoSizeMaxTextSize="20sp"
-        android:autoSizeMinTextSize="12sp"
+        android:autoSizeMaxTextSize="18sp"
+        android:autoSizeMinTextSize="11sp"
         android:autoSizeStepGranularity="1sp"
         android:autoSizeTextType="uniform"
         android:fontFamily="@font/inter_bold"
         android:gravity="center"
         android:includeFontPadding="false"
         android:maxLines="1" />
+
+    <include
+        layout="@layout/widget_refresh"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="2dp" />
 </LinearLayout>

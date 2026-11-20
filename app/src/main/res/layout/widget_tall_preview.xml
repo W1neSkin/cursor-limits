@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Picker only. A square ring, so the launcher does not stretch it into an oval. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/widget_bg"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <FrameLayout
+        android:layout_width="72dp"
+        android:layout_height="72dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/weekly_kicker"
+            android:src="@drawable/widget_ring_preview" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/inter_bold"
+            android:gravity="center"
+            android:text="49"
+            android:textColor="@color/text"
+            android:textSize="22sp" />
+    </FrameLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:fontFamily="@font/inter_bold"
+        android:gravity="center"
+        android:text="$13.94"
+        android:textColor="@color/gold"
+        android:textSize="14sp" />
+
+    <TextView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="4dp"
+        android:gravity="center"
+        android:text="↻"
+        android:textColor="@color/text"
+        android:textSize="14sp" />
+</LinearLayout>

@@ -80,11 +80,9 @@ object WidgetRenderer {
                     Kind.FLEX -> bindFlex(context, views, layout, text, left, light, width, height)
                 }
                 views.setOnClickPendingIntent(R.id.widget_root, open)
-                // Small sizes are only the ring and the dollar. The arrow is on the card and the wide row.
-                if (layout == R.layout.widget_limit || layout == R.layout.widget_wide) {
-                    views.setOnClickPendingIntent(R.id.refresh_button, refresh)
-                    showRefresh(views, layout, loading, light)
-                }
+                // Every size has an arrow. On the small ones it sits beside or under the ring.
+                views.setOnClickPendingIntent(R.id.refresh_button, refresh)
+                showRefresh(views, layout, loading, light)
                 manager.updateAppWidget(id, views)
             }
         }
@@ -195,6 +193,7 @@ object WidgetRenderer {
     ) {
         val dp = flexRingDp(layout, width, height)
         val label = if (left == null) "—" else "$left"
+        fitRing(views, dp)
         views.setImageViewBitmap(R.id.ring, ring(context, dp, left, label, "", light))
         if (layout == R.layout.widget_tiny) return
         views.setTextViewText(R.id.credits_value, text?.credits ?: "—")
@@ -211,9 +210,10 @@ object WidgetRenderer {
             }
         }
         return when (layout) {
-            R.layout.widget_compact -> (height - 12).coerceIn(36, 88)
-            R.layout.widget_tiny -> minOf(width, height).coerceIn(40, 140) - 8
-            else -> (minOf(width, height) - 32).coerceIn(48, 140)
+            // Leave the dollar and the refresh arrow their own space, and stay square.
+            R.layout.widget_compact -> (height - 12).coerceIn(28, 52)
+            R.layout.widget_tiny -> (minOf(width, height) - 8).coerceIn(36, 120)
+            else -> (minOf(width, height) - 56).coerceIn(44, 120)
         }
     }
 
@@ -252,7 +252,11 @@ object WidgetRenderer {
     }
 
     private fun showRefresh(views: RemoteViews, layout: Int, loading: Boolean, light: Boolean) {
-        val iconSp = if (layout == R.layout.widget_limit) 16f else 15f
+        val iconSp = when (layout) {
+            R.layout.widget_limit -> 16f
+            R.layout.widget_tiny -> 12f
+            else -> 14f
+        }
         views.setTextViewTextSize(R.id.refresh_icon, TypedValue.COMPLEX_UNIT_SP, iconSp)
         views.setTextColor(R.id.refresh_icon, if (light) LIGHT_TEXT else DARK_TEXT)
         views.setViewVisibility(R.id.refresh_icon, if (loading) View.GONE else View.VISIBLE)

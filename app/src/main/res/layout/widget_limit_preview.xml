@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Picker only. Shows the ring, the reset date, and the dollar the way the card looks. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/widget_bg"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="12dp">
+
+    <FrameLayout
+        android:layout_width="84dp"
+        android:layout_height="84dp">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/weekly_kicker"
+            android:src="@drawable/widget_ring_preview" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_bold"
+                android:includeFontPadding="false"
+                android:text="49%"
+                android:textColor="@color/text"
+                android:textSize="20sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/inter_medium"
+                android:letterSpacing="0.12"
+                android:text="@string/left_word"
+                android:textAllCaps="true"
+                android:textColor="@color/green"
+                android:textSize="9sp" />
+        </LinearLayout>
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_medium"
+            android:letterSpacing="0.12"
+            android:text="@string/resets_word"
+            android:textAllCaps="true"
+            android:textColor="@color/muted"
+            android:textSize="11sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_bold"
+            android:text="NOV 20"
+            android:textColor="@color/text"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_medium"
+            android:text="09:38"
+            android:textColor="@color/muted"
+            android:textSize="13sp" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_medium"
+            android:letterSpacing="0.12"
+            android:text="@string/widget_extra"
+            android:textAllCaps="true"
+            android:textColor="@color/gold"
+            android:textSize="11sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_bold"
+            android:text="$13.94"
+            android:textColor="@color/gold"
+            android:textSize="20sp" />
+    </LinearLayout>
+</LinearLayout>

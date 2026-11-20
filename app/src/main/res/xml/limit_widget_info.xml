@@ -6,7 +6,7 @@
     android:minHeight="110dp"
     android:minResizeWidth="250dp"
     android:maxResizeWidth="480dp"
-    android:previewLayout="@layout/widget_limit"
+    android:previewLayout="@layout/widget_limit_preview"
     android:resizeMode="horizontal"
     android:targetCellWidth="5"
     android:targetCellHeight="2"

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Picker only. Sample numbers, so the row is not an empty LEFT. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/widget_bg"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingStart="12dp"
+    android:paddingEnd="10dp">
+
+    <ImageView
+        android:layout_width="28dp"
+        android:layout_height="28dp"
+        android:contentDescription="@string/weekly_kicker"
+        android:src="@drawable/widget_ring_preview" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:fontFamily="@font/inter_bold"
+        android:text="49%"
+        android:textColor="@color/green"
+        android:textSize="16sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:fontFamily="@font/inter_medium"
+        android:text="@string/left_word"
+        android:textAllCaps="true"
+        android:textColor="@color/green"
+        android:textSize="11sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:fontFamily="@font/inter_medium"
+        android:text="NOV 20"
+        android:textColor="@color/muted"
+        android:textSize="13sp" />
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/inter_bold"
+        android:text="$13.94"
+        android:textColor="@color/gold"
+        android:textSize="16sp" />
+
+    <TextView
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="6dp"
+        android:gravity="center"
+        android:text="↻"
+        android:textColor="@color/text"
+        android:textSize="14sp" />
+</LinearLayout>

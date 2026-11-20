@@ -13,4 +13,10 @@
         android:contentDescription="@string/weekly_kicker"
         android:scaleType="fitCenter"
         android:src="@drawable/widget_ring_preview" />
+
+    <include
+        layout="@layout/widget_refresh"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:layout_gravity="bottom|end" />
 </FrameLayout>
