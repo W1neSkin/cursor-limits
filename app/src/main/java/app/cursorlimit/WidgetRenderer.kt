@@ -129,22 +129,15 @@ object WidgetRenderer {
         val textColor = if (light) LIGHT_TEXT else DARK_TEXT
         val muted = if (light) LIGHT_MUTED else DARK_MUTED
         val gold = if (light) LIGHT_GOLD else DARK_GOLD
-        // Fill the cell height, but leave a column for the date and the dollar.
-        val ringDp = if (height > 0) {
-            val byHeight = height - 12
-            val byWidth = if (width > 0) width - 200 else byHeight
-            minOf(byHeight, byWidth).coerceIn(88, byHeight)
-        } else {
-            120
-        }
-        val scale = (ringDp / 110f).coerceIn(1f, 1.45f)
-        fitRing(views, ringDp)
-        views.setTextViewTextSize(R.id.reset_caption, TypedValue.COMPLEX_UNIT_SP, 11f * scale)
-        views.setTextViewTextSize(R.id.reset_day, TypedValue.COMPLEX_UNIT_SP, 22f * scale)
-        views.setTextViewTextSize(R.id.reset_time, TypedValue.COMPLEX_UNIT_SP, 14f * scale)
+        // The ring grows with the cell, then stops where the date and the full dollar still fit.
+        val fit = app.cursorlimit.core.WidgetFit.card(width, height)
+        fitRing(views, fit.ringDp)
+        views.setTextViewTextSize(R.id.reset_caption, TypedValue.COMPLEX_UNIT_SP, fit.captionSp)
+        views.setTextViewTextSize(R.id.reset_day, TypedValue.COMPLEX_UNIT_SP, fit.daySp)
+        views.setTextViewTextSize(R.id.reset_time, TypedValue.COMPLEX_UNIT_SP, fit.timeSp)
         views.setImageViewBitmap(
             R.id.ring,
-            ring(context, ringDp, left, if (left == null) "—" else "$left%", "LEFT", light),
+            ring(context, fit.ringDp, left, if (left == null) "—" else "$left%", "LEFT", light),
         )
         views.setTextViewText(R.id.reset_day, if (text != null) day else "—")
         views.setTextViewText(R.id.reset_time, if (text != null) clock else "")
@@ -156,7 +149,8 @@ object WidgetRenderer {
                 color = gold,
                 density = context.resources.displayMetrics.density,
                 typeface = interBold(context),
-                scale = scale,
+                scale = fit.moneyScale,
+                maxWidthPx = (fit.moneySlotDp * context.resources.displayMetrics.density).toInt(),
             ),
         )
         views.setTextColor(R.id.reset_caption, muted)
@@ -189,17 +183,19 @@ object WidgetRenderer {
         height: Int,
     ) {
         val muted = if (light) LIGHT_MUTED else DARK_MUTED
-        val ringDp = if (height > 0) (height - 8).coerceIn(32, 56) else 36
-        val scale = (ringDp / 34f).coerceIn(1f, 1.35f)
-        fitRing(views, ringDp)
-        views.setTextViewTextSize(R.id.remaining, TypedValue.COMPLEX_UNIT_SP, 18f * scale)
-        views.setTextViewTextSize(R.id.left_label, TypedValue.COMPLEX_UNIT_SP, 12f * scale)
-        views.setTextViewTextSize(R.id.reset_day, TypedValue.COMPLEX_UNIT_SP, 14f * scale)
-        views.setTextViewTextSize(R.id.credits_value, TypedValue.COMPLEX_UNIT_SP, 18f * scale)
-        views.setImageViewBitmap(R.id.ring, ring(context, ringDp, left, "", "", light))
-        views.setTextViewText(R.id.remaining, if (left == null) "—" else "$left%")
-        views.setTextViewText(R.id.reset_day, if (text != null) day else "—")
-        views.setTextViewText(R.id.credits_value, text?.credits ?: "—")
+        val percent = if (left == null) "—" else "$left%"
+        val amount = text?.credits ?: "—"
+        val shownDay = if (text != null) day else "—"
+        val fit = app.cursorlimit.core.WidgetFit.wide(width, height, percent, shownDay, amount)
+        fitRing(views, fit.ringDp)
+        views.setTextViewTextSize(R.id.remaining, TypedValue.COMPLEX_UNIT_SP, fit.percentSp)
+        views.setTextViewTextSize(R.id.left_label, TypedValue.COMPLEX_UNIT_SP, fit.leftSp)
+        views.setTextViewTextSize(R.id.reset_day, TypedValue.COMPLEX_UNIT_SP, fit.daySp)
+        views.setTextViewTextSize(R.id.credits_value, TypedValue.COMPLEX_UNIT_SP, fit.moneySp)
+        views.setImageViewBitmap(R.id.ring, ring(context, fit.ringDp, left, "", "", light))
+        views.setTextViewText(R.id.remaining, percent)
+        views.setTextViewText(R.id.reset_day, shownDay)
+        views.setTextViewText(R.id.credits_value, amount)
         views.setTextColor(R.id.remaining, if (light) LIGHT_GREEN else DARK_GREEN)
         views.setTextColor(R.id.left_label, if (light) LIGHT_GREEN else DARK_GREEN)
         views.setTextColor(R.id.reset_day, muted)

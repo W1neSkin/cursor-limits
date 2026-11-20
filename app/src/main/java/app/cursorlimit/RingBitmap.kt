@@ -50,23 +50,29 @@ object RingBitmap {
      * EXTRA and the dollar, painted with the same face as the ring.
      * A home-screen text view on Samsung drops this font when the text auto-sizes.
      */
-    fun money(caption: String, amount: String, color: Int, density: Float, typeface: Typeface, scale: Float): Bitmap {
-        val captionPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            this.color = color
-            this.typeface = typeface
-            textSize = 12f * density * scale
-            letterSpacing = 0.12f
-            textAlign = Paint.Align.RIGHT
+    fun money(
+        caption: String,
+        amount: String,
+        color: Int,
+        density: Float,
+        typeface: Typeface,
+        scale: Float,
+        maxWidthPx: Int,
+    ): Bitmap {
+        // Shrink until the bitmap is no wider than the gap beside the date. One pass is not enough
+        // when letter spacing rounds up, so the second pass uses the real measured width.
+        var fitted = scale
+        var captionPaint = moneyPaint(color, typeface, 12f * density * fitted, 0.12f)
+        var amountPaint = moneyPaint(color, typeface, 26f * density * fitted, 0f)
+        var width = moneyWidth(captionPaint, caption, amountPaint, amount)
+        var guard = 0
+        while (maxWidthPx > 0 && width > maxWidthPx && guard < 4) {
+            fitted *= (maxWidthPx - 2).toFloat() / width.toFloat()
+            captionPaint = moneyPaint(color, typeface, 12f * density * fitted, 0.12f)
+            amountPaint = moneyPaint(color, typeface, 26f * density * fitted, 0f)
+            width = moneyWidth(captionPaint, caption, amountPaint, amount)
+            guard += 1
         }
-        val amountPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-            this.color = color
-            this.typeface = typeface
-            textSize = 26f * density * scale
-            textAlign = Paint.Align.RIGHT
-        }
-        val width = ceil(
-            maxOf(captionPaint.measureText(caption), amountPaint.measureText(amount)),
-        ).toInt().coerceAtLeast(1) + 2
         val captionHeight = captionPaint.descent() - captionPaint.ascent()
         val amountHeight = amountPaint.descent() - amountPaint.ascent()
         val gap = 2f * density
@@ -76,6 +82,22 @@ object RingBitmap {
         canvas.drawText(caption, width - 1f, -captionPaint.ascent(), captionPaint)
         canvas.drawText(amount, width - 1f, captionHeight + gap - amountPaint.ascent(), amountPaint)
         return bitmap
+    }
+
+    private fun moneyPaint(color: Int, typeface: Typeface, textSize: Float, letterSpacing: Float): Paint {
+        return Paint(Paint.ANTI_ALIAS_FLAG).apply {
+            this.color = color
+            this.typeface = typeface
+            this.textSize = textSize
+            this.letterSpacing = letterSpacing
+            textAlign = Paint.Align.RIGHT
+        }
+    }
+
+    private fun moneyWidth(captionPaint: Paint, caption: String, amountPaint: Paint, amount: String): Int {
+        return ceil(
+            maxOf(captionPaint.measureText(caption), amountPaint.measureText(amount)),
+        ).toInt().coerceAtLeast(1) + 2
     }
 
     /** Percent sits in the middle. On the large card, LEFT is a second line under it. */
