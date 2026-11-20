@@ -1,13 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    Shown in the status bar when an alert fires.
+    Android keeps only the white shape, so this is the app icon as a silhouette:
+    the ring, the cube, and the dot in the gap.
+-->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="24dp"
     android:height="24dp"
     android:viewportWidth="24"
     android:viewportHeight="24">
     <path
-        android:fillColor="#FFFFFF"
-        android:pathData="M3,10h18v4h-18z" />
+        android:fillColor="@android:color/transparent"
+        android:pathData="M8.82,19.88 A8.5,8.5 0 1 1 15.18,19.88"
+        android:strokeColor="#FFFFFF"
+        android:strokeLineCap="round"
+        android:strokeWidth="2" />
     <path
         android:fillColor="#FFFFFF"
-        android:pathData="M3,10h9v4h-9z" />
+        android:pathData="M12,5.5 L17.63,8.75 L17.63,15.25 L12,18.5 L6.37,15.25 L6.37,8.75 Z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M12,21.35 m-1.15,0 a1.15,1.15 0 1,1 2.3,0 a1.15,1.15 0 1,1 -2.3,0" />
 </vector>

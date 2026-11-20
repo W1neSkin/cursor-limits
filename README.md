@@ -51,7 +51,7 @@ The refresh mark updates immediately. A tap anywhere else on the widget opens th
 
 ## The app
 
-Version 2.7.1 is one screen, split down the middle. Releases use three numbers: a small fix bumps the last one. Swipe down to refresh. The home-screen card shows a ring for the weekly remainder, the reset date beside that ring, and extra credits on the right.
+Version 2.7.2 is one screen, split down the middle. Releases use three numbers: a small fix bumps the last one. Swipe down to refresh. The home-screen card shows a ring for the weekly remainder, the reset date beside that ring, and extra credits on the right.
 
 The left half is mint. It shows the weekly limit that is left, and under that the day and time the week resets. That date belongs only to the weekly limit.
 
