@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Cursor Limits — Android home screen widget</title>
   <meta name="description" content="Cursor Limits is an Android app. Its home screen widgets show the weekly limit as a ring, the reset date, and extra credits." />
+  <link rel="icon" href="images/icon.png" />
   <link rel="canonical" href="https://w1neskin.github.io/cursor-limits/" />
   <meta property="og:title" content="Cursor Limits — Android home screen widget" />
   <meta property="og:description" content="See your weekly Cursor limit as a ring, the reset date, and extra credits on the Android home screen." />
@@ -65,18 +66,7 @@
     }
     .bar { display: flex; align-items: center; gap: 16px; height: 64px; }
     .brand { display: flex; align-items: center; gap: 10px; font-weight: 650; letter-spacing: -0.03em; text-decoration: none; }
-    .mark {
-      width: 28px; height: 28px; border-radius: 8px; background: #12151c;
-      border: 1px solid var(--line); position: relative;
-    }
-    .mark::before {
-      content: ""; position: absolute; left: 6px; right: 6px; top: 13px; height: 4px;
-      border-radius: 4px; background: #2c3344;
-    }
-    .mark::after {
-      content: ""; position: absolute; left: 6px; width: 9px; top: 13px; height: 4px;
-      border-radius: 4px; background: var(--blue);
-    }
+    .mark { width: 28px; height: 28px; display: block; flex: none; }
     nav { margin-left: auto; display: flex; gap: 18px; align-items: center; }
     nav a { color: var(--muted); text-decoration: none; font-size: 14px; }
     nav a:hover { color: var(--text); }
@@ -138,7 +128,7 @@
 <body>
   <header>
     <div class="wrap bar">
-      <a class="brand" href="#top"><span class="mark" aria-hidden="true"></span> Cursor Limits</a>
+      <a class="brand" href="#top"><img class="mark" src="images/icon.png" alt="" /> Cursor Limits</a>
       <nav>
         <a class="quiet" href="#widgets">Widgets</a>
         <a class="quiet" href="#install">Install</a>
