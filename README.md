@@ -2,11 +2,11 @@
 
 Project page, with the APK download: [w1neskin.github.io/cursor-limits](https://w1neskin.github.io/cursor-limits/)
 
-Android home-screen widgets for a Cursor subscription. The card shows the plan name, how much of the weekly limit is left, when it resets, and the extra credits in dollars.
+Android home-screen widgets for a Cursor subscription. A ring shows how much of the weekly limit is left. The reset date sits beside the ring. Extra credits, in dollars, sit on the right.
 
 The app is built for a phone, including a Samsung Galaxy in a five-column grid. It runs on Android 8 and newer.
 
-The pictures below are interface previews with sample numbers (`46%` left, `$13.95`). A signed-in phone shows the account’s own figures.
+The pictures below are interface previews with sample numbers (`46%` left, reset on Nov 20 at 09:38, `$13.95` extra). A signed-in phone shows the account’s own figures.
 
 ![Dark widgets: card, wide row, and the small Limits sizes](docs/images/home-dark.png)
 
@@ -16,13 +16,11 @@ The pictures below are interface previews with sample numbers (`46%` left, `$13.
 
 | Line | Meaning |
 | --- | --- |
-| Plan | The Cursor plan name, for example Super. |
-| Percent left | Share of the current weekly limit that is still unused. |
-| Used | Share already spent, to one decimal place. |
-| Reset | Local date and time when the weekly cycle ends. |
-| Extra credits | Extra credits in dollars, separate from the weekly limit. |
+| Percent left | Share of the current weekly limit that is still unused. The ring is that share. |
+| Reset | Local day and time when the weekly cycle ends. It belongs to the weekly limit only. |
+| Extra | Extra credits in dollars. They do not reset on that day. |
 
-Green is the remaining weekly percent. Gold is the extra-credit balance. The blue bar is how much of the week is already used.
+Green is the remaining weekly percent. Gold is the extra-credit balance.
 
 ## Widgets
 
@@ -30,11 +28,11 @@ Long-press the home screen, open Widgets, and pick one of three:
 
 ### Limits Card
 
-The full card: plan, percent left, blue bar, reset time, and extra credits. Drag it wider to fill the row. On a five-column screen that is 5 cells wide and 2 cells tall.
+The ring, the reset date beside it, and extra credits on the right. Drag it wider to fill the row. On a five-column screen that is 5 cells wide and 2 cells tall.
 
 ### Limits Wide
 
-One row: percent left, extra credits, and the usage bar underneath. It stretches across the screen the same way the card does.
+One row: a small ring, the percent left, the reset day, and the extra credits. It stretches across the screen the same way the card does, one cell tall.
 
 ### Limits
 
@@ -42,14 +40,14 @@ One small widget that you resize by dragging an edge.
 
 | Size | What it shows |
 | --- | --- |
-| 1×1 | The remaining percent only. Tap it to open the app. |
-| 2×1 | Remaining percent and extra credits, side by side, plus refresh. |
-| 1×2 | The same two numbers stacked, plus refresh. |
-| 2×2 | The same two numbers, larger, if you drag both the width and the height. |
+| 1×1 | The ring only, with a small refresh arrow in the corner. |
+| 2×1 | The ring and extra credits side by side, plus refresh. |
+| 1×2 | The ring, then extra credits, then refresh, stacked. |
+| 2×2 | The same stack, larger, if you drag both the width and the height. |
 
 Green is the percent left. Gold is the extra credits. The 1×1 size shows only the green number.
 
-The refresh mark updates immediately. On the 1×1 size there is no room for it, so a tap opens the app instead.
+The refresh mark updates immediately. A tap anywhere else on the widget opens the app.
 
 ## The app
 
@@ -108,7 +106,7 @@ keytool -genkeypair -v \
 | --- | --- |
 | `app/` | Android app, widgets, sign-in, refresh schedule, alerts. |
 | `core/` | Parsing and the text shown on the card. No Android dependencies. |
-| `core/src/test/` | Unit tests for the period, the credit balance, and the card copy. |
+| `core/src/test/` | Unit tests for the period, the credit balance, the card copy, and the widget sizes. |
 | `dist/cursor-limit.apk` | Latest signed debug build for sideloading. |
 
 ## Privacy
