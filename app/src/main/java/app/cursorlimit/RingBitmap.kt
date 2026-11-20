@@ -50,18 +50,18 @@ object RingBitmap {
      * EXTRA and the dollar, painted with the same face as the ring.
      * A home-screen text view on Samsung drops this font when the text auto-sizes.
      */
-    fun money(caption: String, amount: String, color: Int, density: Float, typeface: Typeface): Bitmap {
+    fun money(caption: String, amount: String, color: Int, density: Float, typeface: Typeface, scale: Float): Bitmap {
         val captionPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
             this.color = color
             this.typeface = typeface
-            textSize = 11f * density
-            letterSpacing = 0.14f
+            textSize = 12f * density * scale
+            letterSpacing = 0.12f
             textAlign = Paint.Align.RIGHT
         }
         val amountPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
             this.color = color
             this.typeface = typeface
-            textSize = 22f * density
+            textSize = 26f * density * scale
             textAlign = Paint.Align.RIGHT
         }
         val width = ceil(

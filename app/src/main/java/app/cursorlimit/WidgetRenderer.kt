@@ -75,8 +75,8 @@ object WidgetRenderer {
                 val width = widgetSize(manager, id, AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH, AppWidgetManager.OPTION_APPWIDGET_MAX_WIDTH)
                 val height = widgetSize(manager, id, AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT, AppWidgetManager.OPTION_APPWIDGET_MAX_HEIGHT)
                 when (face.kind) {
-                    Kind.CARD -> bindCard(context, views, text, day, clock, left, error, loading, light, height)
-                    Kind.WIDE -> bindWide(context, views, text, day, left, light, height)
+                    Kind.CARD -> bindCard(context, views, text, day, clock, left, error, loading, light, width, height)
+                    Kind.WIDE -> bindWide(context, views, text, day, left, light, width, height)
                     Kind.FLEX -> bindFlex(context, views, layout, text, left, light, width, height)
                 }
                 views.setOnClickPendingIntent(R.id.widget_root, open)
@@ -123,14 +123,25 @@ object WidgetRenderer {
         error: String?,
         loading: Boolean,
         light: Boolean,
+        width: Int,
         height: Int,
     ) {
         val textColor = if (light) LIGHT_TEXT else DARK_TEXT
         val muted = if (light) LIGHT_MUTED else DARK_MUTED
         val gold = if (light) LIGHT_GOLD else DARK_GOLD
-        // The ring follows the cell height, so a short row does not push the dollar off the edge.
-        val ringDp = if (height > 0) (height - 24).coerceIn(72, 120) else 96
+        // Fill the cell height, but leave a column for the date and the dollar.
+        val ringDp = if (height > 0) {
+            val byHeight = height - 12
+            val byWidth = if (width > 0) width - 200 else byHeight
+            minOf(byHeight, byWidth).coerceIn(88, byHeight)
+        } else {
+            120
+        }
+        val scale = (ringDp / 110f).coerceIn(1f, 1.45f)
         fitRing(views, ringDp)
+        views.setTextViewTextSize(R.id.reset_caption, TypedValue.COMPLEX_UNIT_SP, 11f * scale)
+        views.setTextViewTextSize(R.id.reset_day, TypedValue.COMPLEX_UNIT_SP, 22f * scale)
+        views.setTextViewTextSize(R.id.reset_time, TypedValue.COMPLEX_UNIT_SP, 14f * scale)
         views.setImageViewBitmap(
             R.id.ring,
             ring(context, ringDp, left, if (left == null) "—" else "$left%", "LEFT", light),
@@ -145,6 +156,7 @@ object WidgetRenderer {
                 color = gold,
                 density = context.resources.displayMetrics.density,
                 typeface = interBold(context),
+                scale = scale,
             ),
         )
         views.setTextColor(R.id.reset_caption, muted)
@@ -173,11 +185,17 @@ object WidgetRenderer {
         day: String,
         left: Int?,
         light: Boolean,
+        width: Int,
         height: Int,
     ) {
         val muted = if (light) LIGHT_MUTED else DARK_MUTED
-        val ringDp = if (height > 0) (height - 12).coerceIn(26, 40) else 32
+        val ringDp = if (height > 0) (height - 8).coerceIn(32, 56) else 36
+        val scale = (ringDp / 34f).coerceIn(1f, 1.35f)
         fitRing(views, ringDp)
+        views.setTextViewTextSize(R.id.remaining, TypedValue.COMPLEX_UNIT_SP, 18f * scale)
+        views.setTextViewTextSize(R.id.left_label, TypedValue.COMPLEX_UNIT_SP, 12f * scale)
+        views.setTextViewTextSize(R.id.reset_day, TypedValue.COMPLEX_UNIT_SP, 14f * scale)
+        views.setTextViewTextSize(R.id.credits_value, TypedValue.COMPLEX_UNIT_SP, 18f * scale)
         views.setImageViewBitmap(R.id.ring, ring(context, ringDp, left, "", "", light))
         views.setTextViewText(R.id.remaining, if (left == null) "—" else "$left%")
         views.setTextViewText(R.id.reset_day, if (text != null) day else "—")
@@ -244,7 +262,7 @@ object WidgetRenderer {
         sublabel: String,
         light: Boolean,
     ): android.graphics.Bitmap {
-        val px = (dp * context.resources.displayMetrics.density).toInt().coerceIn(48, 360)
+        val px = (dp * context.resources.displayMetrics.density).toInt().coerceIn(48, 440)
         val fraction = (left ?: 0) / 100f
         return RingBitmap.create(
             size = px,
