@@ -25,14 +25,11 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:autoSizeMaxTextSize="16sp"
-        android:autoSizeMinTextSize="10sp"
-        android:autoSizeStepGranularity="1sp"
-        android:autoSizeTextType="uniform"
         android:fontFamily="@font/inter_bold"
         android:gravity="center"
         android:includeFontPadding="false"
-        android:maxLines="1" />
+        android:maxLines="1"
+        android:textSize="14sp" />
 
     <include
         layout="@layout/widget_refresh"

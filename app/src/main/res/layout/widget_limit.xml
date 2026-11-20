@@ -63,39 +63,19 @@
                 android:visibility="gone" />
         </LinearLayout>
 
-        <!-- Weight, not Space: the launcher rejects Space, and wrap_content clips $13.94. -->
-        <LinearLayout
+        <!-- Weight, not Space: the launcher rejects Space. -->
+        <TextView
             android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <!-- Painted, not a text view: Samsung swaps the font when a widget text view auto-sizes. -->
+        <ImageView
+            android:id="@+id/credits_block"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_weight="1"
-            android:gravity="end"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/credits_caption"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/inter_medium"
-                android:gravity="end"
-                android:letterSpacing="0.14"
-                android:text="@string/widget_extra"
-                android:textAllCaps="true"
-                android:textSize="11sp" />
-
-            <TextView
-                android:id="@+id/credits_value"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:autoSizeMaxTextSize="26sp"
-                android:autoSizeMinTextSize="13sp"
-                android:autoSizeStepGranularity="1sp"
-                android:autoSizeTextType="uniform"
-                android:fontFamily="@font/inter_bold"
-                android:gravity="end"
-                android:includeFontPadding="false"
-                android:maxLines="1" />
-        </LinearLayout>
+            android:contentDescription="@string/extra_kicker" />
     </LinearLayout>
 
     <include

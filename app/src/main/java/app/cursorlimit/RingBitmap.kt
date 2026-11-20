@@ -5,6 +5,7 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.RectF
 import android.graphics.Typeface
+import kotlin.math.ceil
 
 /** The mint arc is the share of the week still left, drawn from 12 o'clock. */
 object RingBitmap {
@@ -42,6 +43,38 @@ object RingBitmap {
         if (label.isNotEmpty()) {
             drawLabel(canvas, safe, label, sublabel, arcColor, labelColor, typeface)
         }
+        return bitmap
+    }
+
+    /**
+     * EXTRA and the dollar, painted with the same face as the ring.
+     * A home-screen text view on Samsung drops this font when the text auto-sizes.
+     */
+    fun money(caption: String, amount: String, color: Int, density: Float, typeface: Typeface): Bitmap {
+        val captionPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+            this.color = color
+            this.typeface = typeface
+            textSize = 11f * density
+            letterSpacing = 0.14f
+            textAlign = Paint.Align.RIGHT
+        }
+        val amountPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+            this.color = color
+            this.typeface = typeface
+            textSize = 22f * density
+            textAlign = Paint.Align.RIGHT
+        }
+        val width = ceil(
+            maxOf(captionPaint.measureText(caption), amountPaint.measureText(amount)),
+        ).toInt().coerceAtLeast(1) + 2
+        val captionHeight = captionPaint.descent() - captionPaint.ascent()
+        val amountHeight = amountPaint.descent() - amountPaint.ascent()
+        val gap = 2f * density
+        val height = ceil(captionHeight + gap + amountHeight).toInt().coerceAtLeast(1)
+        val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        canvas.drawText(caption, width - 1f, -captionPaint.ascent(), captionPaint)
+        canvas.drawText(amount, width - 1f, captionHeight + gap - amountPaint.ascent(), amountPaint)
         return bitmap
     }
 

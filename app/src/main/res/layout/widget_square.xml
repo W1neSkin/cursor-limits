@@ -4,14 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/widget_bg"
-    android:gravity="center_horizontal"
+    android:gravity="center"
     android:orientation="vertical"
-    android:padding="8dp">
+    android:padding="6dp">
 
     <ImageView
         android:id="@+id/ring"
-        android:layout_width="72dp"
-        android:layout_height="72dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:contentDescription="@string/weekly_kicker"
         android:scaleType="fitCenter"
         android:src="@drawable/widget_ring_preview" />
@@ -20,15 +20,12 @@
         android:id="@+id/credits_value"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:autoSizeMaxTextSize="18sp"
-        android:autoSizeMinTextSize="11sp"
-        android:autoSizeStepGranularity="1sp"
-        android:autoSizeTextType="uniform"
+        android:layout_marginTop="2dp"
         android:fontFamily="@font/inter_bold"
         android:gravity="center"
         android:includeFontPadding="false"
-        android:maxLines="1" />
+        android:maxLines="1"
+        android:textSize="14sp" />
 
     <include
         layout="@layout/widget_refresh"

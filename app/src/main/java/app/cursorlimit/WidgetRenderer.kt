@@ -137,12 +137,19 @@ object WidgetRenderer {
         )
         views.setTextViewText(R.id.reset_day, if (text != null) day else "—")
         views.setTextViewText(R.id.reset_time, if (text != null) clock else "")
-        views.setTextViewText(R.id.credits_value, text?.credits ?: "—")
+        views.setImageViewBitmap(
+            R.id.credits_block,
+            RingBitmap.money(
+                caption = "EXTRA",
+                amount = text?.credits ?: "—",
+                color = gold,
+                density = context.resources.displayMetrics.density,
+                typeface = interBold(context),
+            ),
+        )
         views.setTextColor(R.id.reset_caption, muted)
         views.setTextColor(R.id.reset_day, textColor)
         views.setTextColor(R.id.reset_time, muted)
-        views.setTextColor(R.id.credits_caption, gold)
-        views.setTextColor(R.id.credits_value, gold)
         val status = when {
             loading -> "Updating…"
             !error.isNullOrBlank() -> error
@@ -210,10 +217,14 @@ object WidgetRenderer {
             }
         }
         return when (layout) {
-            // Leave the dollar and the refresh arrow their own space, and stay square.
+            // Dollar line plus the refresh arrow, so the arrow stays inside the cell.
             R.layout.widget_compact -> (height - 12).coerceIn(28, 52)
             R.layout.widget_tiny -> (minOf(width, height) - 8).coerceIn(36, 120)
-            else -> (minOf(width, height) - 56).coerceIn(44, 120)
+            else -> {
+                val byWidth = width - 16
+                val byHeight = height - 52
+                minOf(byWidth, byHeight).coerceIn(28, 100)
+            }
         }
     }
 
