@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>When the Cursor weekly limit runs out</title>
+  <meta name="description" content="When the weekly Cursor usage pool hits zero, Cursor models can continue from prepaid extra credits. The weekly reset does not clear that balance." />
+  <link rel="canonical" href="https://w1neskin.github.io/cursor-limits/when-the-limit-runs-out.html" />
+  <link rel="icon" href="images/icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
+  <style>
+    body { margin: 0; background: #0e1016; color: #f4f6fb; font-family: Inter, system-ui, sans-serif; line-height: 1.55; }
+    a { color: #f4f6fb; }
+    .wrap { width: min(720px, calc(100% - 32px)); margin: 0 auto; padding: 48px 0 80px; }
+    h1 { font-size: clamp(32px, 5vw, 44px); line-height: 1.05; letter-spacing: -0.04em; }
+    p, li { color: #9aa3b5; font-size: 17px; }
+    strong { color: #f4f6fb; }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <p><a href="./">Cursor Limits</a></p>
+    <h1>When the weekly Cursor limit runs out</h1>
+    <p>Cursor Limits is a free Android widget for that weekly pool. It shows what is left, when the pool resets, and the prepaid extra credits. It is not made by Cursor.</p>
+    <p>On a current Cursor plan the included pool refreshes weekly. Unused percent does not carry over. When the pool reaches zero, the editor shows a notice. Cursor models are not slowed down. If prepaid credit remains, those models keep running and the cost comes out of that credit. Third-party models were already charged to that credit, not to the weekly pool.</p>
+    <p>Requests stop in two cases. The prepaid balance is also empty and automatic top-up is off. Or a monthly cap on extra usage is reached, in which case extra usage pauses even if credit is still there.</p>
+    <p>The weekly reset does not wipe prepaid credit. Credit stays until it is spent or it expires. Cursor publishes the billing rules at <a href="https://cursor.com/help/models-and-usage/usage-limits">cursor.com/help/models-and-usage/usage-limits</a>.</p>
+    <p><a href="https://github.com/W1neSkin/cursor-limits/releases/download/v2.7.2/cursor-limit.apk">Download the Android APK</a></p>
+  </main>
+</body>
+</html>

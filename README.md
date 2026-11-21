@@ -1,8 +1,8 @@
 # Cursor Limits
 
-Project page, with the APK download: [w1neskin.github.io/cursor-limits](https://w1neskin.github.io/cursor-limits/)
+Free Android home-screen widgets for a weekly Cursor usage limit. A ring shows what is left, next to the reset date and prepaid extra credits. Android 8 or newer, including Samsung. No separate account: sign in to Cursor. Download the APK from the project page: [w1neskin.github.io/cursor-limits](https://w1neskin.github.io/cursor-limits/).
 
-Android home-screen widgets for a Cursor subscription. A ring shows how much of the weekly limit is left. The reset date sits beside the ring. Extra credits, in dollars, sit on the right.
+The app is independent. It is not made or endorsed by Cursor.
 
 The app is built for a phone, including a Samsung Galaxy in a five-column grid. It runs on Android 8 and newer.
 

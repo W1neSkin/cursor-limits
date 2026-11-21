@@ -1,0 +1,20 @@
+# Cursor Limits
+
+> Free Android home-screen widgets for a weekly Cursor usage limit. The ring shows what is left, beside the reset date and prepaid extra credits.
+
+Cursor Limits is an independent app for Android 8 and newer, including Samsung Galaxy phones. It is not made or endorsed by Cursor or Anysphere. It does not create its own account. You sign in to the Cursor account you already use. The APK is free.
+
+The widget shows three things:
+
+- How much of the weekly Cursor usage pool is still left
+- The local day and time when that pool resets
+- Prepaid extra credits in dollars, which do not reset on that day
+
+When the weekly pool reaches zero, Cursor models can keep running from prepaid credit if a balance remains. The weekly reset does not clear that credit. Billing rules belong to Cursor: https://cursor.com/help/models-and-usage/usage-limits
+
+## Pages
+
+- [Cursor Limits](https://w1neskin.github.io/cursor-limits/): what the widgets show, and the APK
+- [When the weekly pool runs out](https://w1neskin.github.io/cursor-limits/when-the-limit-runs-out.html)
+- [APK 2.7.2](https://github.com/W1neSkin/cursor-limits/releases/download/v2.7.2/cursor-limit.apk)
+- [Source code](https://github.com/W1neSkin/cursor-limits)
